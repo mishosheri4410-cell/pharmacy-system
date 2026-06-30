@@ -71,6 +71,7 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,
 
 <div class="container">
 
+  <!-- PIN Overlay -->
   <div class="pin-overlay hidden" id="pinOverlay">
     <div class="pin-box">
       <h3>🔒 حماية المدير</h3>
@@ -85,6 +86,7 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,
     </div>
   </div>
 
+  <!-- Settings / Manager Setup -->
   <div class="section">
     <div class="section-title">⚙️ الإعدادات</div>
     <div class="card">
@@ -100,44 +102,13 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,
     </div>
   </div>
 
+  <!-- Mode Switcher -->
   <div class="section">
     <div class="tip">👤 <strong>وضع الدكتور:</strong> يملأ التقارير ويرسلها للمدير عبر واتساب<br>👑 <strong>وضع المدير:</strong> دخول محمي بـ PIN — عرض كل الصلاحيات</div>
     <button class="btn btn-success" id="modeToggleBtn" onclick="toggleMode()">🔁 التبديل لوضع المدير</button>
   </div>
 
-  <div class="section" id="adminSection" style="display:none">
-    <div class="section-title">👥 إدارة المستخدمين</div>
-    <div class="card">
-      <div class="form-row">
-        <div class="form-group">
-          <label>اسم المستخدم</label>
-          <input id="newUsername" placeholder="username">
-        </div>
-        <div class="form-group">
-          <label>كلمة المرور</label>
-          <input id="newPassword" type="password" placeholder="password">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>الاسم الكامل</label>
-          <input id="newFullName" placeholder="مثال: د. أحمد">
-        </div>
-        <div class="form-group">
-          <label>الصلاحية</label>
-          <select id="newRole">
-            <option value="doctor">دكتور</option>
-            <option value="admin">مدير</option>
-          </select>
-        </div>
-      </div>
-      <button class="btn btn-primary" onclick="addUser()">➕ إضافة مستخدم</button>
-      <div style="margin-top:12px">
-        <div id="userList"></div>
-      </div>
-    </div>
-  </div>
-
+  <!-- Apps -->
   <div class="section">
     <div class="section-title">📱 التطبيقات</div>
     <div class="app-grid" id="appGrid">
@@ -166,9 +137,15 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,
         <div>عروض الصيدلية</div>
         <div class="sub">Offers & Promotions</div>
       </a>
+      <a class="app-btn" style="background:linear-gradient(135deg,#ffd600,#ff8f00);color:#1a1a1a" href="index.html">
+        <div class="icon">🎯</div>
+        <div>Bundle Offer 520 EGP</div>
+        <div class="sub">Poster & Video Ad</div>
+      </a>
     </div>
   </div>
 
+  <!-- QR Codes -->
   <div class="section">
     <div class="section-title">📲 QR للوصول السريع</div>
     <div class="card">
@@ -177,6 +154,7 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,
     </div>
   </div>
 
+  <!-- Deploy Instructions -->
   <div class="section">
     <div class="section-title">☁️ رفع الملفات (Netlify)</div>
     <div class="tip">
@@ -192,51 +170,29 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,
 
 <div class="footer">صيدليات د. شريف شعبان © 2026 — جميع الحقوق محفوظة</div>
 
-<script src="shared.js"></script>
 <script>
+// === State ===
 let mode = localStorage.getItem('pharma_mode') || 'doctor'
-let managerPin = ''
-let managerWa = ''
-let currentUser = null
+let managerPin = localStorage.getItem('pharma_pin') || ''
+let managerWa = localStorage.getItem('pharma_wa') || ''
 
-async function init() {
-  currentUser = await PharmaAPI.checkAuth()
-  if (!currentUser) return
-  const settings = await PharmaAPI.getSettings()
-  managerPin = settings.pharma_pin || localStorage.getItem('pharma_pin') || ''
-  managerWa = settings.pharma_wa || localStorage.getItem('pharma_wa') || ''
+function init() {
   if (managerWa) document.getElementById('waInput').value = managerWa
   if (managerPin) document.getElementById('pinSetup').value = managerPin
   updateModeUI()
   generateQRs()
   buildPinGrid()
-  updateUserUI()
 }
 
-function updateUserUI() {
-  const header = document.querySelector('.header h1')
-  if (currentUser) {
-    const userBadge = document.createElement('div')
-    userBadge.style.cssText = 'font-size:12px;opacity:0.9;margin-top:6px'
-    userBadge.innerHTML = '👤 ' + currentUser.fullName + ' | <a href="#" onclick="PharmaAPI.logout();return false" style="color:#f39c12;text-decoration:underline">تسجيل خروج</a>'
-    header.parentNode.insertBefore(userBadge, header.nextSibling)
-  }
-}
-
-async function saveSettings() {
+function saveSettings() {
   const wa = document.getElementById('waInput').value.trim().replace(/^0+/, '')
   const pin = document.getElementById('pinSetup').value.trim()
   if (!wa) { alert('❌ من فضلك أدخل رقم واتساب المدير'); return }
   if (!pin || pin.length < 4) { alert('❌ من فضلك أدخل PIN مكون من 4-6 أرقام'); return }
-  try {
-    await PharmaAPI.setSettings({ pharma_wa: wa, pharma_pin: pin })
-    localStorage.setItem('pharma_wa', wa)
-    localStorage.setItem('pharma_pin', pin)
-    managerWa = wa; managerPin = pin
-    alert('✅ تم حفظ الإعدادات على الخادم بنجاح!\n📱 رقم المدير: ' + wa + '\n🔑 PIN: ' + pin)
-  } catch (e) {
-    alert('❌ فشل الحفظ على الخادم: ' + e.message)
-  }
+  localStorage.setItem('pharma_wa', wa)
+  localStorage.setItem('pharma_pin', pin)
+  managerWa = wa; managerPin = pin
+  alert('✅ تم حفظ الإعدادات بنجاح!\n📱 رقم المدير: ' + wa + '\n🔑 PIN: ' + pin)
 }
 
 function toggleMode() {
@@ -271,53 +227,17 @@ function submitPin() {
 function updateModeUI() {
   const badge = document.getElementById('modeBadge')
   const btn = document.getElementById('modeToggleBtn')
-  const adminSection = document.getElementById('adminSection')
   if (mode === 'manager') {
     badge.textContent = '👑 وضع المدير'
     badge.style.background = '#f39c12'
     btn.textContent = '🔁 التبديل لوضع الدكتور'
     btn.className = 'btn btn-primary'
-    if (currentUser && currentUser.role === 'admin') {
-      adminSection.style.display = ''
-      loadUsers()
-    }
   } else {
     badge.textContent = '👤 وضع الدكتور'
     badge.style.background = '#e94560'
     btn.textContent = '🔁 التبديل لوضع المدير'
     btn.className = 'btn btn-success'
-    adminSection.style.display = 'none'
   }
-}
-
-async function addUser() {
-  const username = document.getElementById('newUsername').value.trim()
-  const password = document.getElementById('newPassword').value
-  const fullName = document.getElementById('newFullName').value.trim()
-  const role = document.getElementById('newRole').value
-  if (!username || !password || !fullName) { alert('❌ يرجى ملء جميع الحقول'); return }
-  try {
-    await PharmaAPI.registerUser(username, password, fullName, role)
-    alert('✅ تم إضافة المستخدم بنجاح')
-    document.getElementById('newUsername').value = ''
-    document.getElementById('newPassword').value = ''
-    document.getElementById('newFullName').value = ''
-    loadUsers()
-  } catch (e) { alert('❌ ' + e.message) }
-}
-
-async function loadUsers() {
-  try {
-    const users = await PharmaAPI.getUsers()
-    const container = document.getElementById('userList')
-    if (users.length === 0) { container.innerHTML = '<p style="font-size:12px;color:#888">لا يوجد مستخدمون</p>'; return }
-    let html = '<table><tr><th>المستخدم</th><th>الاسم</th><th>الصلاحية</th></tr>'
-    users.forEach(u => {
-      html += '<tr><td>' + u.username + '</td><td>' + u.fullName + '</td><td>' + (u.role === 'admin' ? 'مدير' : 'دكتور') + '</td></tr>'
-    })
-    html += '</table>'
-    container.innerHTML = html
-  } catch (e) {}
 }
 
 function buildPinGrid() {
@@ -364,6 +284,7 @@ function generateQRs() {
   })
 }
 
+// Load QRCode library dynamically
 const qrScript = document.createElement('script')
 qrScript.src = 'https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js'
 qrScript.onload = generateQRs

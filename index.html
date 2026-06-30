@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة تحليل بيانات الصيدلية - Marina Insurance</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; color: #1a1a2e; }
+/* Header */
+.header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 30px 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+.header h1 { font-size: 28px; font-weight: 700; margin-bottom: 5px; }
+.header p { font-size: 14px; opacity: 0.8; }
+/* Tabs */
+.tabs { background: #fff; padding: 0 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+.tab-btn { display: inline-block; padding: 16px 24px; cursor: pointer; font-size: 14px; font-weight: 600; color: #666; border-bottom: 3px solid transparent; transition: all 0.2s; }
+.tab-btn:hover { color: #0f3460; background: #f8f9fa; }
+.tab-btn.active { color: #0f3460; border-bottom-color: #0f3460; }
+/* Content */
+.content { max-width: 1200px; margin: 0 auto; padding: 30px 40px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+/* Cards */
+.card { background: #fff; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.card h2 { font-size: 18px; font-weight: 700; margin-bottom: 15px; color: #1a1a2e; }
+.card h3 { font-size: 15px; font-weight: 600; margin-bottom: 10px; color: #0f3460; }
+/* Stats grid */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px; }
+.stat-box { background: #fff; border-radius: 12px; padding: 22px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.stat-box .num { font-size: 28px; font-weight: 700; color: #0f3460; margin: 8px 0; }
+.stat-box .label { font-size: 13px; color: #888; }
+.stat-box .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+.stat-box.gold { border-top: 4px solid #f39c12; }
+.stat-box.blue { border-top: 4px solid #0f3460; }
+.stat-box.green { border-top: 4px solid #27ae60; }
+.stat-box.red { border-top: 4px solid #e74c3c; }
+.stat-box.purple { border-top: 4px solid #8e44ad; }
+/* Buttons */
+.btn { display: inline-block; padding: 10px 24px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; text-decoration: none; transition: all 0.2s; }
+.btn-primary { background: #0f3460; color: #fff; }
+.btn-primary:hover { background: #1a1a2e; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(15,52,96,0.3); }
+.btn-success { background: #27ae60; color: #fff; }
+.btn-success:hover { background: #219a52; transform: translateY(-1px); }
+.btn-outline { background: transparent; color: #0f3460; border: 2px solid #0f3460; }
+.btn-outline:hover { background: #0f3460; color: #fff; }
+.btn-sm { padding: 6px 16px; font-size: 12px; }
+.btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
+/* Table */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #f8f9fa; color: #555; font-weight: 600; padding: 12px 15px; text-align: right; border-bottom: 2px solid #e9ecef; }
+td { padding: 10px 15px; border-bottom: 1px solid #f0f0f0; }
+tr:hover td { background: #f8f9ff; }
+/* Info box */
+.info { background: #e8f4fd; border-right: 4px solid #0f3460; padding: 15px 20px; border-radius: 8px; margin: 15px 0; font-size: 13px; color: #1a1a2e; }
+.info strong { color: #0f3460; }
+/* File list */
+.file-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #f8f9fa; border-radius: 8px; margin-bottom: 10px; transition: all 0.2s; }
+.file-item:hover { background: #eef1f5; }
+.file-item .name { font-weight: 600; font-size: 14px; }
+.file-item .size { font-size: 12px; color: #888; }
+.file-item .desc { font-size: 12px; color: #666; margin-top: 3px; }
+/* Timeline */
+.timeline { position: relative; padding-right: 30px; }
+.timeline::before { content: ''; position: absolute; right: 8px; top: 0; bottom: 0; width: 2px; background: #ddd; }
+.timeline-item { position: relative; margin-bottom: 20px; }
+.timeline-item::before { content: ''; position: absolute; right: -22px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: #0f3460; border: 2px solid #fff; box-shadow: 0 0 0 2px #0f3460; }
+.timeline-item .date { font-size: 11px; color: #999; }
+.timeline-item .title { font-weight: 600; font-size: 14px; margin: 2px 0; }
+.timeline-item .desc { font-size: 13px; color: #666; }
+/* Responsive */
+@media (max-width: 768px) {
+    .header { padding: 20px; }
+    .tabs { padding: 0 20px; overflow-x: auto; white-space: nowrap; }
+    .content { padding: 20px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .tab-btn { padding: 12px 16px; font-size: 13px; }
+}
+/* Badge */
+.badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+.badge-blue { background: #dbeafe; color: #1e40af; }
+.badge-green { background: #d1fae5; color: #065f46; }
+.badge-red { background: #fee2e2; color: #991b1b; }
+.badge-gold { background: #fef3c7; color: #92400e; }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>&#x1F3E5; صيدليات د. شريف شعبان</h1>
+    <p style="margin-bottom:5px;">
+        <a href="pharmacy_hub.html" style="color:#f39c12;font-weight:700;text-decoration:none;">🏥 إدارة الصيدلية (التقارير اليومية)</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <span>📊 تحليل تأمين مارينا (Inaya)</span>
+    </p>
+    <p style="font-size:12px;opacity:0.7;">تقارير المبيعات وتحليل الفترات - يناير / فبراير / مارس 2026</p>
+</div>
+
+<div class="tabs" id="tabs">
+    <span class="tab-btn active" onclick="switchTab('dashboard')">&#x1F4CA; الرئيسية</span>
+    <span class="tab-btn" onclick="switchTab('repeated')">&#x1F504; المتكررين (74)</span>
+    <span class="tab-btn" onclick="switchTab('unique')">&#x1F465; الفريدين (6)</span>
+    <span class="tab-btn" onclick="switchTab('shifts')">&#x1F552; تحليل الورديات</span>
+    <span class="tab-btn" onclick="switchTab('files')">&#x1F4C1; الملفات</span>
+    <span class="tab-btn" onclick="switchTab('about')">&#x2139;&#xFE0F; عن المشروع</span>
+</div>
+
+<div class="content">
+
+<!-- TAB: Dashboard -->
+<div class="tab-panel active" id="tab-dashboard">
+    <div class="stats">
+        <div class="stat-box gold">
+            <div class="label">&#x1F4B0; إجمالي المطالبات</div>
+            <div class="num">86,787 EGP</div>
+            <div class="sub">لـ 74 عميل متكرر</div>
+        </div>
+        <div class="stat-box blue">
+            <div class="label">&#x1F4C8; المستحق للصيدلية</div>
+            <div class="num">56,662 EGP</div>
+            <div class="sub">من 3 شهور</div>
+        </div>
+        <div class="stat-box green">
+            <div class="label">&#x1F4B5; المتبقي</div>
+            <div class="num">30,125 EGP</div>
+            <div class="sub">رصيد معلق</div>
+        </div>
+        <div class="stat-box purple">
+            <div class="label">&#x1F465; إجمالي العملاء</div>
+            <div class="num">87</div>
+            <div class="sub">مشترك فريد عبر 3 شهور</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>&#x1F4CA; نظرة سريعة</h2>
+        <table>
+            <tr><th>القسم</th><th>العدد</th><th>الإجمالي</th><th>المستحق</th><th>المتبقي</th></tr>
+            <tr><td>العملاء المتكررين (التلاتة شهور)</td><td>74</td><td>86,787 EGP</td><td>56,662 EGP</td><td>30,125 EGP</td></tr>
+            <tr><td>فريد يناير</td><td>1</td><td>420 EGP</td><td>235 EGP</td><td>185 EGP</td></tr>
+            <tr><td>فريد فبراير</td><td>1</td><td>354 EGP</td><td>198 EGP</td><td>156 EGP</td></tr>
+            <tr><td>فريد مارس</td><td>4</td><td>1,921 EGP</td><td>1,076 EGP</td><td>845 EGP</td></tr>
+            <tr style="font-weight:700;background:#f8f9fa;"><td>الإجمالي الكلي</td><td>80</td><td>89,482 EGP</td><td>58,171 EGP</td><td>31,311 EGP</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>&#x1F4C4; الملفات المتاحة</h2>
+        <div class="btn-group">
+            <a href="repeated_customers_report.xlsx" class="btn btn-primary">&#x1F4E5; فتح تقرير المتكررين</a>
+            <a href="unique_customers_report.xlsx" class="btn btn-success">&#x1F4E5; فتح تقرير الفريدين</a>
+        </div>
+    </div>
+</div>
+
+<!-- TAB: Repeated -->
+<div class="tab-panel" id="tab-repeated">
+    <div class="card">
+        <h2>&#x1F504; العملاء المتكررين - 74 عميل</h2>
+        <p style="color:#666;margin-bottom:15px;">هؤلاء العملاء ظهروا في يناير + فبراير + مارس 2026. تم تحليل إجمالي مطالباتهم والمبالغ المستحقة للصيدلية.</p>
+        <a href="repeated_customers_report.xlsx" class="btn btn-primary">&#x1F4E5; فتح ملف Excel الكامل</a>
+    </div>
+
+    <div class="stats">
+        <div class="stat-box gold"><div class="label">&#x1F4B0; الإجمالي</div><div class="num">86,787 EGP</div><div class="sub">إجمالي المطالبات</div></div>
+        <div class="stat-box blue"><div class="label">&#x1F3E5; المستحق</div><div class="num">56,662 EGP</div><div class="sub">المستحق للصيدلية</div></div>
+        <div class="stat-box green"><div class="label">&#x1F4B5; المتبقي</div><div class="num">30,125 EGP</div><div class="sub">الرصيد المتبقي</div></div>
+    </div>
+
+    <div class="card">
+        <h3>&#x1F4CB; عينة من البيانات (أول 10)</h3>
+        <table>
+            <tr><th>Card No</th><th>الاسم</th><th>الإجمالي</th><th>المستحق</th><th>المتبقي</th></tr>
+            <tr><td>116357</td><td>---</td><td>1,665</td><td>932</td><td>733</td></tr>
+            <tr><td>120048</td><td>---</td><td>819</td><td>459</td><td>360</td></tr>
+            <tr><td>120053</td><td>---</td><td>1,878</td><td>1,052</td><td>826</td></tr>
+            <tr><td>148416</td><td>---</td><td>1,773</td><td>992</td><td>780</td></tr>
+            <tr><td>148420</td><td>---</td><td>1,875</td><td>1,161</td><td>714</td></tr>
+            <tr><td>230641</td><td>---</td><td>1,047</td><td>586</td><td>461</td></tr>
+            <tr><td>297586</td><td>---</td><td>945</td><td>529</td><td>416</td></tr>
+            <tr><td>320930</td><td>---</td><td>2,178</td><td>1,220</td><td>958</td></tr>
+            <tr><td>425672</td><td>---</td><td>1,355</td><td>759</td><td>596</td></tr>
+            <tr><td>511157</td><td>---</td><td>4,518</td><td>2,490</td><td>2,028</td></tr>
+        </table>
+        <p style="margin-top:12px;font-size:12px;color:#888;">&#x1F4A1; القائمة كاملة في ملف Excel — افتحه بالزر أعلاه</p>
+    </div>
+</div>
+
+<!-- TAB: Unique -->
+<div class="tab-panel" id="tab-unique">
+    <div class="card">
+        <h2>&#x1F465; العملاء الفريدين (شهر واحد فقط)</h2>
+        <p style="color:#666;margin-bottom:15px;">هؤلاء العملاء ظهروا في شهر واحد فقط من الأشهر الثلاثة، مع المبالغ الخاصة بهم.</p>
+        <a href="unique_customers_report.xlsx" class="btn btn-success">&#x1F4E5; فتح ملف Excel الكامل</a>
+    </div>
+
+    <div class="stats">
+        <div class="stat-box gold"><div class="label">&#x1F4C5; يناير</div><div class="num">1 عميل</div><div class="sub">420 EGP إجمالي</div></div>
+        <div class="stat-box blue"><div class="label">&#x1F4C5; فبراير</div><div class="num">1 عميل</div><div class="sub">354 EGP إجمالي</div></div>
+        <div class="stat-box green"><div class="label">&#x1F4C5; مارس</div><div class="num">4 عملاء</div><div class="sub">1,921 EGP إجمالي</div></div>
+    </div>
+
+    <div class="card">
+        <h3>&#x1F4C5; يناير - عميل وحيد</h3>
+        <table><tr><th>Card No</th><th>الإجمالي</th><th>المستحق</th><th>المتبقي</th></tr>
+        <tr><td>93365</td><td>420.50</td><td>235.48</td><td>185.02</td></tr></table>
+    </div>
+    <div class="card">
+        <h3>&#x1F4C5; فبراير - عميل وحيد</h3>
+        <table><tr><th>Card No</th><th>الإجمالي</th><th>المستحق</th><th>المتبقي</th></tr>
+        <tr><td>164403</td><td>354</td><td>198.24</td><td>155.76</td></tr></table>
+    </div>
+    <div class="card">
+        <h3>&#x1F4C5; مارس - 4 عملاء</h3>
+        <table><tr><th>Card No</th><th>الإجمالي</th><th>المستحق</th><th>المتبقي</th></tr>
+        <tr><td>270825</td><td>512</td><td>286.72</td><td>225.28</td></tr>
+        <tr><td>469622</td><td>437</td><td>244.72</td><td>192.28</td></tr>
+        <tr><td>93073</td><td>516</td><td>288.96</td><td>227.04</td></tr>
+        <tr><td>93091</td><td>456</td><td>255.36</td><td>200.64</td></tr>
+    </table></div>
+</div>
+
+<!-- TAB: Shifts -->
+<div class="tab-panel" id="tab-shifts">
+    <div class="card">
+        <h2>&#x1F552; تحليل المبيعات حسب الورديات (Helper Program)</h2>
+        <p style="color:#666;">تحليل مبيعات الصيدلية من برنامج Helper للفترة من 25 يناير 2025 حتى الآن، مقسمة حسب فترات الورديات.</p>
+    </div>
+    <div class="stats">
+        <div class="stat-box gold"><div class="label">&#x2600;&#xFE0F; الفترة الصباحية</div><div class="num">45,842 EGP</div><div class="sub">6ص - 2م | 1,719 فاتورة</div></div>
+        <div class="stat-box blue"><div class="label">&#x1F31E; الفترة المسائية</div><div class="num">342,904 EGP</div><div class="sub">2م - 10م | 9,031 فاتورة</div></div>
+        <div class="stat-box green"><div class="label">&#x1F319; الفترة الليلية</div><div class="num">109,261 EGP</div><div class="sub">10م - 6ص | 5,633 فاتورة</div></div>
+    </div>
+    <div class="stats">
+        <div class="stat-box purple"><div class="label">&#x1F4CA; الإجمالي الكلي</div><div class="num">498,006 EGP</div><div class="sub">16,383 فاتورة</div></div>
+    </div>
+    <div class="card">
+        <h3>&#x1F4CA; توزيع المبيعات</h3>
+        <div style="display:flex;gap:8px;height:40px;border-radius:8px;overflow:hidden;margin:15px 0;">
+            <div style="flex:9.2;background:#f39c12;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px;">صباح 9%</div>
+            <div style="flex:68.8;background:#0f3460;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px;">مساء 69%</div>
+            <div style="flex:22;background:#27ae60;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px;">ليل 22%</div>
+        </div>
+        <div class="info"><strong>&#x1F4CD; ملاحظة:</strong> يتم إدخال أسماء أطباء الورديات يدويًا — البرنامج يسجل الوقت فقط. يمكن ربط الورديات بالأطباء لاحقًا.</div>
+    </div>
+</div>
+
+<!-- TAB: Files -->
+<div class="tab-panel" id="tab-files">
+    <div class="card">
+        <h2>&#x1F4C1; جميع الملفات</h2>
+        <p style="color:#666;margin-bottom:15px;">الملفات النهائية والبيانات الخام المستخدمة في التحليل.</p>
+    </div>
+
+    <h3 style="margin:15px 0 10px;">&#x1F4E5; ملفات التقارير النهائية</h3>
+    <div class="file-item">
+        <div><div class="name">repeated_customers_report.xlsx</div><div class="desc">74 عميل متكرر — الأسماء + المطالبات + المستحق + المتبقي</div></div>
+        <div><span class="badge badge-blue">14 KB</span></div>
+        <a href="repeated_customers_report.xlsx" class="btn btn-primary btn-sm">&#x1F4E5; فتح</a>
+    </div>
+    <div class="file-item">
+        <div><div class="name">unique_customers_report.xlsx</div><div class="desc">6 عملاء فريدين — مقسمين حسب الشهر</div></div>
+        <div><span class="badge badge-blue">11 KB</span></div>
+        <a href="unique_customers_report.xlsx" class="btn btn-success btn-sm">&#x1F4E5; فتح</a>
+    </div>
+
+    <h3 style="margin:20px 0 10px;">&#x1F4C2; البيانات الخام (على سطح المكتب)</h3>
+    <div class="file-item">
+        <div><div class="name">FROM_25_1_2025_TO_NOW.xls</div><div class="desc">تصدير مبيعات Helper (4.7 MB) — 16,383 فاتورة</div></div>
+        <div><span class="badge badge-green">4.7 MB</span></div>
+    </div>
+    <div class="file-item">
+        <div><div class="name">JANUARY MARINA.xlsx / february marina.xlsx / march .xlsx</div><div class="desc">ملفات مطالبات تأمين مارينا (Inaya) — 3 شهور</div></div>
+        <div><span class="badge badge-green">~15 KB</span></div>
+    </div>
+    <div class="file-item">
+        <div><div class="name">helperexl.xls</div><div class="desc">ملف الأصناف/المخزون من Helper (3.6 MB)</div></div>
+        <div><span class="badge badge-green">3.6 MB</span></div>
+    </div>
+
+    <div class="info" style="margin-top:20px;"><strong>&#x1F4A1; ملاحظة:</strong> جميع ملفات Excel في مجلد <code>opencode</code> على سطح المكتب. الروابط أعلاه تشير إلى الملفات في نفس المجلد.</div>
+</div>
+
+<!-- TAB: About -->
+<div class="tab-panel" id="tab-about">
+    <div class="card">
+        <h2>&#x2139;&#xFE0F; عن هذا المشروع</h2>
+        <p style="color:#666;line-height:1.7;">تم إنشاء هذه التحليلات لمساعدة الصيدلية في تتبع المطالبات التأمينية لشركة مارينا (Inaya)، وتحليل بيانات المبيعات من برنامج Helper، وتحديد العملاء المتكررين والمبالغ المتبقية عليهم.</p>
+    </div>
+
+    <div class="card">
+        <h3>&#x1F5C4;&#xFE0F; مسار العمل</h3>
+        <div class="timeline">
+            <div class="timeline-item"><div class="date">الخطوة 1</div><div class="title">تصدير بيانات المبيعات</div><div class="desc">تصدير ملف <code>FROM_25_1_2025_TO_NOW.xls</code> من برنامج Helper على السيرفر <code>26.226.242.231</code></div></div>
+            <div class="timeline-item"><div class="date">الخطوة 2</div><div class="title">تحليل الورديات</div><div class="desc">تقسيم المبيعات إلى 3 فترات (صباح/مساء/ليل) — إجمالي 498,006 EGP</div></div>
+            <div class="timeline-item"><div class="date">الخطوة 3</div><div class="title">استخراج ملفات التأمين</div><div class="desc">تحويل ملفات Marina Inaya من XLSX إلى CSV وتحليلها</div></div>
+            <div class="timeline-item"><div class="date">الخطوة 4</div><div class="title">تحديد المتكررين</div><div class="desc">إيجاد 74 عميلاً ظهروا في يناير + فبراير + مارس</div></div>
+            <div class="timeline-item"><div class="date">الخطوة 5</div><div class="title">تحديد الفريدين</div><div class="desc">إيجاد 6 عملاء ظهروا في شهر واحد فقط</div></div>
+            <div class="timeline-item"><div class="date">الخطوة 6</div><div class="title">حساب المبالغ</div><div class="desc">حساب الإجمالي والمستحق للصيدلية والمتبقي لكل عميل</div></div>
+            <div class="timeline-item"><div class="date">الخطوة 7</div><div class="title">إنشاء التقارير</div><div class="desc">تصدير ملفات Excel منسقة ولوحة HTML هذه</div></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>&#x1F4E1; معلومات السيرفر</h3>
+        <table>
+            <tr><th>البيان</th><th>القيمة</th></tr>
+            <tr><td>اسم السيرفر</td><td>DESKTOP-EP6JOSV</td></tr>
+            <tr><td>IP</td><td>26.226.242.231</td></tr>
+            <tr><td>مستخدم RDP</td><td>user02 / user03</td></tr>
+            <tr><td>برنامج Helper</td><td>HELPER9.exe (FoxPro 9) في <code>D:\Client\</code></td></tr>
+            <tr><td>قاعدة البيانات</td><td><code>E:\PHARM\DATA</code></td></tr>
+        </table>
+    </div>
+</div>
+
+</div>
+
+<script>
+function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>

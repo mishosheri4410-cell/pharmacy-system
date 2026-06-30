@@ -1,0 +1,9 @@
+node_modules/
+server/data.json
+server/package-lock.json
+*.xlsx
+*.csv
+*.png
+*.jpg
+*.jpeg
+qrcode*
