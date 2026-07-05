@@ -2,7 +2,7 @@ const PharmaAPI = {
   API: (function(){
     const host = window.location.hostname;
     if (host === 'localhost' || host === '127.0.0.1') return '';
-    return 'https://pharmacy-backend.onrender.com';
+    return 'https://pharmacy-system-i8ga.vercel.app';
   })(),
 
   async request(method, path, body) {

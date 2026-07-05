@@ -39,25 +39,29 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'خطأ في الخادم' });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log('');
-  console.log('═══════════════════════════════════════════');
-  console.log('  🏥 Pharmacy Management Server');
-  console.log('  صيدليات د. شريف شعبان');
-  console.log('═══════════════════════════════════════════');
-  console.log('');
-  console.log(`  📍 Local:    http://localhost:${PORT}`);
-  const network = getLocalIP();
-  if (network) {
-    console.log(`  📱 Network:  http://${network}:${PORT}`);
-  }
-  console.log('');
-  console.log('  🔐 Default login:');
-  console.log('     Username: admin');
-  console.log('     Password: admin123');
-  console.log('');
-  console.log('═══════════════════════════════════════════');
-});
+module.exports = app;
+
+if (require.main === module) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log('');
+    console.log('═══════════════════════════════════════════');
+    console.log('  🏥 Pharmacy Management Server');
+    console.log('  صيدليات د. شريف شعبان');
+    console.log('═══════════════════════════════════════════');
+    console.log('');
+    console.log(`  📍 Local:    http://localhost:${PORT}`);
+    const network = getLocalIP();
+    if (network) {
+      console.log(`  📱 Network:  http://${network}:${PORT}`);
+    }
+    console.log('');
+    console.log('  🔐 Default login:');
+    console.log('     Username: admin');
+    console.log('     Password: admin123');
+    console.log('');
+    console.log('═══════════════════════════════════════════');
+  });
+}
 
 function getLocalIP() {
   const os = require('os');
