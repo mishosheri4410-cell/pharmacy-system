@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>تقرير الدليفري مع تايمر - صيدليات د. شريف شعبان</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f5f7fa;color:#1a1a2e;padding-bottom:100px}
+.header{background:linear-gradient(135deg,#1a1a2e,#27ae60);color:#fff;padding:20px 16px;text-align:center;position:sticky;top:0;z-index:100}
+.header h1{font-size:20px;font-weight:700}
+.header .sub{font-size:12px;opacity:.8}
+.container{max-width:600px;margin:0 auto;padding:12px}
+.card{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.card-title{font-size:14px;font-weight:700;margin-bottom:10px;color:#1a1a2e}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.form-group{margin-bottom:8px}
+.form-group label{display:block;font-size:11px;font-weight:600;color:#666;margin-bottom:3px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;border:2px solid #e0e7ef;border-radius:8px;font-size:13px;outline:none;transition:border .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#27ae60}
+.form-group textarea{resize:vertical;min-height:50px;font-family:inherit}
+.row-inputs{display:grid;grid-template-columns:2fr 1.5fr 1.5fr 1.5fr 2fr 1.5fr 0.8fr 0.8fr;gap:4px;margin-bottom:6px}
+.row-inputs input,.row-inputs select{padding:8px 6px;border:1.5px solid #e0e7ef;border-radius:6px;font-size:12px;outline:none;min-width:0;width:100%}
+.row-inputs input:focus,.row-inputs select:focus{border-color:#27ae60}
+.row-inputs .time-btn{padding:6px;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;white-space:nowrap}
+.row-inputs .time-btn.start{background:#27ae60;color:#fff}
+.row-inputs .time-btn.start:active{background:#1e8449}
+.row-inputs .time-btn.end{background:#e74c3c;color:#fff}
+.row-inputs .time-btn.end:active{background:#c0392b}
+.row-inputs .time-btn:disabled{opacity:.4;cursor:not-allowed}
+.row-header{display:grid;grid-template-columns:2fr 1.5fr 1.5fr 1.5fr 2fr 1.5fr 0.8fr 0.8fr;gap:4px;padding:6px 4px;font-size:10px;font-weight:700;color:#888;text-align:center;border-bottom:1px solid #eee;margin-bottom:6px}
+.summary-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #27ae60;padding:10px 16px;box-shadow:0 -2px 12px rgba(0,0,0,.1);z-index:200}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;max-width:600px;margin:0 auto}
+.summary-item .num{font-size:16px;font-weight:700;color:#1a1a2e}
+.summary-item .lbl{font-size:10px;color:#888}
+.summary-item .num.green{color:#27ae60}
+.summary-item .num.red{color:#e74c3c}
+.btn-group{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.btn{padding:10px 18px;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.btn:active{transform:scale(.96)}
+.btn-green{background:#27ae60}.btn-green:active{background:#1e8449}
+.btn-blue{background:#0f3460}.btn-blue:active{background:#1a3a6b}
+.btn-red{background:#e74c3c}.btn-red:active{background:#c0392b}
+.btn-orange{background:#e67e22}.btn-orange:active{background:#d35400}
+.btn-sm{padding:8px 14px;font-size:12px}
+.expense-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.expense-row input{flex:1;padding:8px 10px;border:1.5px solid #e0e7ef;border-radius:6px;font-size:12px;outline:none}
+.expense-row input:focus{border-color:#e74c3c}
+.expense-row .rm-btn{padding:6px 10px;border:none;border-radius:6px;background:#eee;color:#e74c3c;cursor:pointer;font-size:14px}
+.mode-section{display:none}
+.mode-section.active{display:block}
+.pin-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:999;padding:20px}
+.pin-box{background:#fff;border-radius:18px;padding:30px 25px;width:100%;max-width:300px;text-align:center}
+.pin-box h3{font-size:16px;margin-bottom:4px}
+.pin-box p{font-size:12px;color:#888;margin-bottom:15px}
+.pin-input{width:100%;padding:14px;border:2px solid #e0e7ef;border-radius:10px;font-size:22px;text-align:center;letter-spacing:8px;outline:none;margin-bottom:12px;direction:ltr}
+.pin-input:focus{border-color:#0f3460}
+.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.pin-key{padding:15px;border:none;border-radius:10px;font-size:20px;font-weight:700;cursor:pointer;background:#f0f4f8;transition:all .1s}
+.pin-key:active{background:#d0d8e4;transform:scale(.95)}
+.pin-key.clear{color:#e74c3c}
+.pin-key.ok{background:#0f3460;color:#fff}
+.hidden{display:none!important}
+.wa-preview{background:#f0faf0;border-radius:8px;padding:12px;font-size:12px;white-space:pre-wrap;direction:ltr;text-align:left;max-height:200px;overflow-y:auto;font-family:monospace;margin-top:8px}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
+.tag-cash{background:#d1fae5;color:#065f46}
+.tag-card{background:#dbeafe;color:#1e40af}
+@media(max-width:500px){
+  .row-header,.row-inputs{grid-template-columns:1.5fr 1fr 1fr 1fr 1.5fr 1fr 0.7fr 0.7fr;font-size:10px}
+  .row-inputs input,.row-inputs select{padding:6px 4px;font-size:11px}
+  .row-inputs .time-btn{font-size:10px;padding:4px}
+  .summary-grid{grid-template-columns:repeat(2,1fr);gap:4px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>⏱️ تقرير الدليفري مع تايمر</h1>
+  <div class="sub">Delivery Timer Report — صيدليات د. شريف شعبان</div>
+</div>
+
+<!-- PIN Overlay -->
+<div class="pin-overlay hidden" id="pinOverlay">
+  <div class="pin-box">
+    <h3>🔒 حماية المدير</h3>
+    <p>أدخل PIN للوصول للإعدادات</p>
+    <input class="pin-input" id="pinInput" type="password" inputmode="numeric" maxlength="6" placeholder="******" readonly>
+    <div class="pin-grid" id="pinGrid"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-red" style="flex:1;font-size:13px;padding:12px" onclick="cancelPin()">إلغاء</button>
+      <button class="btn btn-blue" style="flex:1;font-size:13px;padding:12px" onclick="submitPin()">تأكيد</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Doctor Mode (default) -->
+  <div class="mode-section active" id="doctorSection">
+
+    <!-- Shift Info -->
+    <div class="card">
+      <div class="card-title">📋 معلومات الوردية</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>اسم الدكتور</label>
+          <input id="drName" placeholder="اسم الدكتور">
+        </div>
+        <div class="form-group">
+          <label>تاريخ الوردية</label>
+          <input id="shiftDate" type="date">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>اسم المندوب</label>
+          <input id="repName" placeholder="اسم المندوب">
+        </div>
+        <div class="form-group">
+          <label>وسيلة المواصلات</label>
+          <select id="transport"><option value="موتوسيكل">🛵 موتوسيكل</option><option value="عربية">🚗 عربية</option><option value="عجل">🚲 عجل</option><option value="مشي">🚶 مشي</option></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delivery Rows -->
+    <div class="card">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>📦 الطلبات</span>
+        <button class="btn btn-green btn-sm" onclick="addRow()">+ إضافة طلب</button>
+      </div>
+      <div class="row-header">
+        <span>العميل</span><span>قيمة الأوردر</span><span>الكاش المحصل</span><span>رسوم التوصيل</span><span>طريقة الدفع</span><span>مدة التوصيل</span><span>بدء</span><span>انتهاء</span>
+      </div>
+      <div id="rowsContainer"></div>
+    </div>
+
+    <!-- Expenses -->
+    <div class="card">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>💰 مصروفات المندوب</span>
+        <button class="btn btn-red btn-sm" onclick="addExpense()">+ إضافة مصروف</button>
+      </div>
+      <div id="expensesContainer"></div>
+      <div style="text-align:left;margin-top:8px;font-size:13px;font-weight:700;">إجمالي المصروفات: <span id="totalExpenses">0</span> ج.م</div>
+    </div>
+
+    <!-- Notes -->
+    <div class="card">
+      <div class="card-title">📝 ملاحظات إضافية</div>
+      <div class="form-group">
+        <textarea id="notes" placeholder="أي ملاحظات إضافية..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>توقيع المندوب</label>
+        <input id="signature" placeholder="التوقيع">
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="card">
+      <button class="btn btn-green" style="width:100%;margin-bottom:8px" onclick="sendWhatsApp()">📤 إرسال التقرير عبر واتساب</button>
+      <div class="btn-group">
+        <button class="btn btn-blue" style="flex:1" onclick="printReport()">🖨️ طباعة</button>
+        <button class="btn btn-red" style="flex:1" onclick="resetAll()">🔄 مسح الكل</button>
+      </div>
+    </div>
+
+    <!-- WhatsApp Preview -->
+    <div class="card" id="waPreviewCard" style="display:none">
+      <div class="card-title">👁️ معاينة الرسالة</div>
+      <div class="wa-preview" id="waPreview"></div>
+    </div>
+  </div>
+
+  <!-- Manager Mode -->
+  <div class="mode-section" id="managerSection">
+    <div class="card">
+      <div class="card-title">👑 لوحة المدير</div>
+      <p style="font-size:13px;color:#666;margin-bottom:12px;">يمكنك ضبط رقم واتساب المدير و PIN من هنا.</p>
+      <div class="form-group">
+        <label>رقم واتساب المدير</label>
+        <input id="mgrWa" type="tel" inputmode="numeric" placeholder="مثال: 201234567890">
+      </div>
+      <div class="form-group">
+        <label>PIN المدير (4-6 أرقام)</label>
+        <input id="mgrPin" type="password" inputmode="numeric" maxlength="6" placeholder="******">
+      </div>
+      <button class="btn btn-blue" style="width:100%" onclick="saveMgrSettings()">💾 حفظ</button>
+      <div style="margin-top:12px;font-size:12px;color:#888;">جميع التطبيقات تشارك نفس الإعدادات من اللانشر (pharmacy_hub.html).</div>
+    </div>
+    <button class="btn btn-green" style="width:100%;margin-top:8px" onclick="switchToDoctor()">⬅ الرجوع لوضع الدكتور</button>
+  </div>
+
+</div>
+
+<!-- Summary Bar -->
+<div class="summary-bar">
+  <div class="summary-grid">
+    <div class="summary-item"><div class="num" id="sumOrders">0</div><div class="lbl">طلبات</div></div>
+    <div class="summary-item"><div class="num" id="sumDuration">0</div><div class="lbl">دقيقة</div></div>
+    <div class="summary-item"><div class="num green" id="sumCash">0</div><div class="lbl">صافي</div></div>
+    <div class="summary-item"><div class="num" id="sumDelivery">0</div><div class="lbl">توصيل</div></div>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script>
+// === State ===
+let rowId = 0
+let expenseId = 0
+let mode = 'doctor'
+let managerPin = ''
+let managerWa = ''
+let currentUser = null
+
+// === Init ===
+async function init() {
+  currentUser = await PharmaAPI.checkAuth()
+  if (!currentUser) return
+  await PharmaAPI.syncSettingsToLocal()
+  managerPin = localStorage.getItem('pharma_pin') || ''
+  managerWa = localStorage.getItem('pharma_wa') || ''
+  document.getElementById('shiftDate').value = new Date().toISOString().slice(0,10)
+  if (managerWa) document.getElementById('mgrWa').value = managerWa
+  if (managerPin) document.getElementById('mgrPin').value = managerPin
+  if (currentUser) document.getElementById('drName').value = currentUser.fullName
+  addRow()
+  buildPinGrid()
+  addLogoutButton()
+}
+
+function addLogoutButton() {
+  const header = document.querySelector('.header h1')
+  const logoutLink = document.createElement('div')
+  logoutLink.style.cssText = 'font-size:12px;margin-top:6px'
+  logoutLink.innerHTML = '<a href="#" onclick="PharmaAPI.logout();return false" style="color:#fff;opacity:0.8;text-decoration:underline">تسجيل خروج</a>'
+  header.parentNode.insertBefore(logoutLink, header.nextSibling)
+}
+
+// === PIN ===
+function buildPinGrid() {
+  const g = document.getElementById('pinGrid')
+  const keys = ['1','2','3','4','5','6','7','8','9','','0','⌫']
+  g.innerHTML = keys.map(k => {
+    if (k === '') return '<div></div>'
+    if (k === '⌫') return '<button class="pin-key clear" onclick="pinBackspace()">⌫</button>'
+    return '<button class="pin-key" onclick="pinKey(\''+k+'\')">'+k+'</button>'
+  }).join('')
+}
+
+function pinKey(k) {
+  const inp = document.getElementById('pinInput')
+  if (inp.value.length < 6) inp.value += k
+}
+
+function pinBackspace() {
+  const inp = document.getElementById('pinInput')
+  inp.value = inp.value.slice(0, -1)
+}
+
+function cancelPin() { document.getElementById('pinOverlay').classList.add('hidden') }
+
+function submitPin() {
+  const entered = document.getElementById('pinInput').value
+  if (entered === managerPin) {
+    cancelPin()
+    showManagerMode()
+  } else {
+    alert('❌ PIN خطأ!')
+    document.getElementById('pinInput').value = ''
+  }
+}
+
+function showManagerMode() {
+  mode = 'manager'
+  document.getElementById('doctorSection').classList.remove('active')
+  document.getElementById('managerSection').classList.add('active')
+}
+
+function switchToDoctor() {
+  mode = 'doctor'
+  document.getElementById('managerSection').classList.remove('active')
+  document.getElementById('doctorSection').classList.add('active')
+}
+
+// Check query param for ?mode=manager
+if (new URLSearchParams(window.location.search).get('mode') === 'manager') {
+  if (managerPin) {
+    document.getElementById('pinOverlay').classList.remove('hidden')
+  } else {
+    showManagerMode()
+  }
+}
+
+// === Rows ===
+function addRow() {
+  const id = ++rowId
+  const c = document.getElementById('rowsContainer')
+  const now = new Date()
+  const timeStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0')
+  const div = document.createElement('div')
+  div.id = 'row-'+id
+  div.className = 'row-inputs'
+  div.innerHTML = `
+    <input id="cust-${id}" placeholder="العميل" oninput="calcTotal()">
+    <input id="orderVal-${id}" type="number" placeholder="قيمة" oninput="calcTotal()" onfocus="this.select()">
+    <input id="cashCol-${id}" type="number" placeholder="المحصل" oninput="calcTotal()" onfocus="this.select()">
+    <input id="delFee-${id}" type="number" placeholder="التوصيل" value="10" oninput="calcTotal()" onfocus="this.select()">
+    <select id="payMethod-${id}" onchange="calcTotal()">
+      <option value="كاش">💰 كاش</option>
+      <option value="فيزا">💳 فيزا</option>
+      <option value="محفظة">📱 محفظة</option>
+    </select>
+    <span id="dur-${id}" style="display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#27ae60">00:00</span>
+    <button class="time-btn start" id="startBtn-${id}" onclick="startTimer(${id})">▶ بدء</button>
+    <button class="time-btn end" id="endBtn-${id}" onclick="endTimer(${id})" disabled>■ نهاية</button>
+  `
+  c.appendChild(div)
+  calcTotal()
+}
+
+function startTimer(id) {
+  const now = new Date()
+  document.getElementById('startBtn-'+id).disabled = true
+  document.getElementById('endBtn-'+id).disabled = false
+  document.getElementById('startBtn-'+id).textContent = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0')
+  document.getElementById('startBtn-'+id).dataset.time = now.getTime()
+}
+
+function endTimer(id) {
+  const now = new Date()
+  const startTime = parseInt(document.getElementById('startBtn-'+id).dataset.time)
+  if (!startTime) return
+  const diffMs = now.getTime() - startTime
+  const diffMin = Math.floor(diffMs / 60000)
+  const h = Math.floor(diffMin / 60)
+  const m = diffMin % 60
+  const display = h.toString().padStart(2,'0') + ':' + m.toString().padStart(2,'0')
+  document.getElementById('dur-'+id).textContent = display
+  document.getElementById('endBtn-'+id).disabled = true
+  document.getElementById('endBtn-'+id).textContent = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0')
+  calcTotal()
+}
+
+// === Expenses ===
+function addExpense() {
+  const id = ++expenseId
+  const c = document.getElementById('expensesContainer')
+  const div = document.createElement('div')
+  div.id = 'exp-'+id
+  div.className = 'expense-row'
+  div.innerHTML = `
+    <input id="expName-${id}" placeholder="نوع المصروف" style="flex:1.5">
+    <input id="expVal-${id}" type="number" placeholder="المبلغ" oninput="calcTotal()">
+    <button class="rm-btn" onclick="removeExpense(${id})">✕</button>
+  `
+  c.appendChild(div)
+}
+
+function removeExpense(id) {
+  const el = document.getElementById('exp-'+id)
+  if (el) { el.remove(); calcTotal() }
+}
+
+// === Calculations ===
+function calcTotal() {
+  let orders = 0, totalDuration = 0, totalCash = 0, totalDel = 0, totalExp = 0
+  const rows = document.querySelectorAll('[id^="row-"]')
+  rows.forEach(r => {
+    const id = r.id.replace('row-','')
+    const orderVal = parseFloat(document.getElementById('orderVal-'+id)?.value) || 0
+    const cashCol = parseFloat(document.getElementById('cashCol-'+id)?.value) || 0
+    const delFee = parseFloat(document.getElementById('delFee-'+id)?.value) || 0
+    const durText = document.getElementById('dur-'+id)?.textContent || '00:00'
+    const [h, m] = durText.split(':').map(Number)
+    const durMin = (h||0)*60 + (m||0)
+    if (orderVal > 0 || document.getElementById('cust-'+id)?.value) orders++
+    totalDuration += durMin
+    totalCash += cashCol
+    totalDel += delFee
+  })
+  const expInputs = document.querySelectorAll('[id^="expVal-"]')
+  expInputs.forEach(inp => { totalExp += parseFloat(inp.value) || 0 })
+  const netTotal = totalCash - totalExp
+  document.getElementById('sumOrders').textContent = orders
+  document.getElementById('sumDuration').textContent = totalDuration
+  document.getElementById('sumCash').textContent = netTotal.toFixed(0)
+  document.getElementById('sumDelivery').textContent = totalDel.toFixed(0)
+  document.getElementById('totalExpenses').textContent = totalExp.toFixed(0)
+}
+
+// === Send WhatsApp ===
+function sendWhatsApp() {
+  const wa = managerWa || localStorage.getItem('pharma_wa')
+  if (!wa) { alert('❌ لم يتم تعيين رقم واتساب المدير. اذهب للانشر (pharmacy_hub.html) أو لوحة المدير لتعيينه.'); return }
+  const text = buildReport()
+  if (!text) return
+  document.getElementById('waPreview').textContent = text
+  document.getElementById('waPreviewCard').style.display = 'block'
+  const encoded = encodeURIComponent(text)
+  window.open('https://wa.me/' + wa + '?text=' + encoded, '_blank')
+}
+
+function buildReport() {
+  const dr = document.getElementById('drName').value.trim() || '(دكتور)'
+  const date = document.getElementById('shiftDate').value || '(تاريخ)'
+  const rep = document.getElementById('repName').value.trim() || '(مندوب)'
+  const transport = document.getElementById('transport').value
+  const notes = document.getElementById('notes').value.trim()
+  const signature = document.getElementById('signature').value.trim()
+  const rows = document.querySelectorAll('[id^="row-"]')
+
+  let lines = []
+  lines.push('⏱️ *تقرير الدليفري - صيدليات د. شريف شعبان*')
+  lines.push('═══════════════════════')
+  lines.push('👨‍⚕️ الدكتور: ' + dr)
+  lines.push('📅 التاريخ: ' + date)
+  lines.push('👤 المندوب: ' + rep + ' (' + transport + ')')
+  lines.push('')
+
+  let orderNum = 0, totalOrders = 0, totalCash = 0, totalDel = 0, totalDur = 0
+  rows.forEach(r => {
+    const id = r.id.replace('row-','')
+    const cust = document.getElementById('cust-'+id)?.value.trim()
+    const orderVal = parseFloat(document.getElementById('orderVal-'+id)?.value) || 0
+    const cashCol = parseFloat(document.getElementById('cashCol-'+id)?.value) || 0
+    const delFee = parseFloat(document.getElementById('delFee-'+id)?.value) || 0
+    const payMethod = document.getElementById('payMethod-'+id)?.value || 'كاش'
+    const durText = document.getElementById('dur-'+id)?.textContent || '00:00'
+    if (orderVal > 0) {
+      orderNum++
+      totalOrders += orderVal
+      totalCash += cashCol
+      totalDel += delFee
+      const [h, m] = durText.split(':').map(Number)
+      totalDur += (h||0)*60 + (m||0)
+      lines.push(`*${orderNum}. ${cust || 'عميل'}*`)
+      lines.push(`   📄 الأوردر: ${orderVal.toFixed(0)} ج.م`)
+      lines.push(`   💵 المحصل: ${cashCol.toFixed(0)} ج.م`)
+      lines.push(`   🚚 التوصيل: ${delFee.toFixed(0)} ج.م`)
+      lines.push(`   💳 الدفع: ${payMethod}`)
+      lines.push(`   ⏱ المدة: ${durText}`)
+    }
+  })
+  lines.push('')
+  lines.push('📊 *الإجماليات*')
+  lines.push('   📦 عدد الطلبات: ' + orderNum)
+  lines.push('   💰 إجمالي الأوردرات: ' + totalOrders.toFixed(0) + ' ج.م')
+  lines.push('   💵 إجمالي المحصل: ' + totalCash.toFixed(0) + ' ج.م')
+  lines.push('   🚚 إجمالي التوصيل: ' + totalDel.toFixed(0) + ' ج.م')
+  lines.push('   ⏱ إجمالي الوقت: ' + Math.floor(totalDur/60) + ':' + (totalDur%60).toString().padStart(2,'0'))
+
+  // Expenses
+  const expRows = document.querySelectorAll('[id^="exp-"]')
+  if (expRows.length > 0) {
+    let totalExp = 0
+    lines.push('')
+    lines.push('💰 *مصروفات المندوب*')
+    expRows.forEach(e => {
+      const eid = e.id.replace('exp-','')
+      const name = document.getElementById('expName-'+eid)?.value.trim() || 'مصروف'
+      const val = parseFloat(document.getElementById('expVal-'+eid)?.value) || 0
+      totalExp += val
+      if (val > 0) lines.push(`   • ${name}: ${val.toFixed(0)} ج.م`)
+    })
+    lines.push(`   ➖ الإجمالي: ${totalExp.toFixed(0)} ج.م`)
+    lines.push(`   ✅ *الصافي: ${(totalCash - totalExp).toFixed(0)} ج.م*`)
+  }
+
+  if (notes) { lines.push(''); lines.push('📝 *ملاحظات:* ' + notes) }
+  if (signature) { lines.push(''); lines.push('✍️ *التوقيع:* ' + signature) }
+  lines.push('')
+  lines.push('✅ *تم إرسال التقرير آلياً*')
+  lines.push('صيدليات د. شريف شعبان - فلمنج')
+
+  return lines.join('\n')
+}
+
+// === Print ===
+function printReport() {
+  const text = buildReport()
+  if (!text) return
+  const win = window.open('', '_blank')
+  win.document.write('<html dir="rtl"><head><meta charset="UTF-8"><title>تقرير الدليفري</title><style>body{font-family:Arial,sans-serif;padding:30px;line-height:1.8;font-size:14px}pre{white-space:pre-wrap;direction:rtl}</style></head><body><pre>'+text+'</pre><script>window.print();<' + '/script></body></html>')
+  win.document.close()
+}
+
+// === Reset ===
+function resetAll() {
+  if (!confirm('هل أنت متأكد من مسح كل البيانات؟')) return
+  document.getElementById('drName').value = ''
+  document.getElementById('shiftDate').value = new Date().toISOString().slice(0,10)
+  document.getElementById('repName').value = ''
+  document.getElementById('notes').value = ''
+  document.getElementById('signature').value = ''
+  document.getElementById('rowsContainer').innerHTML = ''
+  document.getElementById('expensesContainer').innerHTML = ''
+  document.getElementById('waPreviewCard').style.display = 'none'
+  rowId = 0; expenseId = 0
+  addRow()
+}
+
+// === Manager ===
+async function saveMgrSettings() {
+  const wa = document.getElementById('mgrWa').value.trim().replace(/^0+/, '')
+  const pin = document.getElementById('mgrPin').value.trim()
+  if (!wa || !pin || pin.length < 4) { alert('❌ أدخل بيانات صحيحة'); return }
+  try {
+    await PharmaAPI.setSettings({ pharma_wa: wa, pharma_pin: pin })
+    localStorage.setItem('pharma_wa', wa); localStorage.setItem('pharma_pin', pin)
+    managerWa = wa; managerPin = pin
+    alert('✅ تم حفظ الإعدادات على الخادم')
+  } catch (e) { alert('❌ فشل الحفظ: ' + e.message) }
+}
+
+// === Init ===
+init()
+</script>
+</body>
+</html>

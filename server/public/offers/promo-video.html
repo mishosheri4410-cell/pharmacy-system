@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bundle Offer - 520 EGP</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+body{
+  font-family:'Segoe UI','Tajawal',Arial,sans-serif;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  overflow:hidden;
+}
+.stage{
+  width:1080px;
+  max-width:100vw;
+  max-height:100vh;
+  aspect-ratio:1080/1920;
+  background:linear-gradient(160deg,#0a0a1a 0%,#0d1b2a 30%,#0d47a1 100%);
+  position:relative;
+  overflow:hidden;
+}
+.particles{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.particle{
+  position:absolute;
+  width:4px;
+  height:4px;
+  background:rgba(255,214,0,.4);
+  border-radius:50%;
+  animation:float linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(100vh) scale(0);opacity:0}
+  10%{opacity:1}
+  90%{opacity:1}
+  100%{transform:translateY(-10vh) scale(1);opacity:0}
+}
+.glow-orb{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  filter:blur(60px);
+}
+.glow-orb.g1{
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(255,214,0,.08),transparent);
+  top:-100px;right:-100px;
+  animation:pulseGlow 4s ease-in-out infinite;
+}
+.glow-orb.g2{
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(26,115,232,.1),transparent);
+  bottom:-80px;left:-80px;
+  animation:pulseGlow 5s ease-in-out infinite reverse;
+}
+@keyframes pulseGlow{
+  0%,100%{opacity:.5;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.15)}
+}
+.content{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:40px 32px;
+}
+.top-badge{
+  text-align:center;
+  opacity:0;
+  animation:slideDown .8s .3s forwards;
+}
+.top-badge span{
+  display:inline-block;
+  background:linear-gradient(90deg,#ffd600,#ff8f00);
+  color:#1a1a1a;
+  padding:8px 24px;
+  border-radius:50px;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+@keyframes slideDown{
+  from{opacity:0;transform:translateY(-20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.pharmacy-name{
+  text-align:center;
+  font-size:12px;
+  color:rgba(255,255,255,.4);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  margin-top:16px;
+  opacity:0;
+  animation:fadeIn .6s .6s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+.main-title{
+  text-align:center;
+  margin-top:30px;
+}
+.main-title .line{
+  display:block;
+  font-size:48px;
+  font-weight:900;
+  color:#fff;
+  line-height:1.15;
+  opacity:0;
+  transform:translateY(30px);
+}
+.main-title .line:nth-child(1){animation:revealUp .7s .9s forwards}
+.main-title .line:nth-child(2){animation:revealUp .7s 1.1s forwards}
+.main-title .line.highlight{
+  background:linear-gradient(90deg,#ffd600,#ff8f00);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+@keyframes revealUp{
+  to{opacity:1;transform:translateY(0)}
+}
+.price-showcase{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:24px;
+  margin-top:40px;
+  opacity:0;
+  animation:fadeIn .5s 1.6s forwards;
+}
+.old-price-block{
+  text-align:center;
+}
+.old-price-block .label{
+  font-size:11px;
+  color:rgba(255,255,255,.3);
+  text-transform:uppercase;
+  letter-spacing:2px;
+}
+.old-price-block .amount{
+  font-size:22px;
+  color:rgba(255,255,255,.35);
+  text-decoration:line-through;
+  margin-top:4px;
+}
+.new-price-block{
+  text-align:center;
+  position:relative;
+}
+.new-price-block .label{
+  font-size:11px;
+  color:rgba(255,255,255,.4);
+  text-transform:uppercase;
+  letter-spacing:2px;
+}
+.new-price-block .amount{
+  font-size:76px;
+  font-weight:900;
+  color:#ffd600;
+  line-height:1;
+  text-shadow:0 0 50px rgba(255,214,0,.3);
+  margin-top:2px;
+  position:relative;
+  animation:pricePulse 2s ease-in-out infinite;
+}
+.new-price-block .amount .currency{
+  font-size:28px;
+  font-weight:700;
+}
+@keyframes pricePulse{
+  0%,100%{text-shadow:0 0 30px rgba(255,214,0,.2)}
+  50%{text-shadow:0 0 60px rgba(255,214,0,.5)}
+}
+.price-divider{
+  width:1px;
+  height:70px;
+  background:linear-gradient(to bottom,transparent,rgba(255,255,255,.12),transparent);
+}
+.save-badge-animated{
+  display:inline-block;
+  background:rgba(76,175,80,.15);
+  border:1px solid rgba(76,175,80,.3);
+  color:#4caf50;
+  padding:4px 18px;
+  border-radius:50px;
+  font-size:13px;
+  font-weight:700;
+  margin-top:8px;
+  animation:savePulse 1.5s ease-in-out infinite;
+}
+@keyframes savePulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.05)}
+}
+.products-row{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:36px;
+  padding:0 10px;
+}
+.product-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:16px;
+  padding:14px 16px;
+  opacity:0;
+  transform:translateX(-30px);
+}
+.product-item:nth-child(1){animation:slideIn .5s 2s forwards}
+.product-item:nth-child(2){animation:slideIn .5s 2.3s forwards}
+.product-item:nth-child(3){animation:slideIn .5s 2.6s forwards}
+@keyframes slideIn{
+  to{opacity:1;transform:translateX(0)}
+}
+.product-icon{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background:linear-gradient(135deg,rgba(255,214,0,.1),rgba(255,214,0,.03));
+  border:1px solid rgba(255,214,0,.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  flex-shrink:0;
+  object-fit:contain;
+  padding:4px;
+}
+.product-info{flex:1;min-width:0}
+.product-info .name{
+  font-size:13px;
+  font-weight:700;
+  color:#fff;
+  line-height:1.3;
+}
+.product-info .note{
+  font-size:11px;
+  color:rgba(255,255,255,.4);
+  margin-top:2px;
+}
+.product-info .old-p{
+  font-size:11px;
+  color:rgba(255,255,255,.25);
+  text-decoration:line-through;
+  margin-top:2px;
+}
+.cta-animated{
+  text-align:center;
+  margin-top:36px;
+  opacity:0;
+  animation:fadeIn .5s 3.2s forwards;
+}
+.cta-animated a{
+  display:inline-block;
+  background:linear-gradient(90deg,#ffd600,#ff8f00);
+  color:#1a1a1a;
+  font-size:18px;
+  font-weight:800;
+  padding:16px 50px;
+  border-radius:60px;
+  text-decoration:none;
+  letter-spacing:1px;
+  box-shadow:0 8px 30px rgba(255,214,0,.2);
+  animation:ctaPulse 2s ease-in-out infinite;
+  text-transform:uppercase;
+}
+@keyframes ctaPulse{
+  0%,100%{box-shadow:0 8px 30px rgba(255,214,0,.2)}
+  50%{box-shadow:0 8px 50px rgba(255,214,0,.45)}
+}
+.cta-animated .sub{
+  font-size:11px;
+  color:rgba(255,255,255,.3);
+  margin-top:12px;
+  letter-spacing:1px;
+}
+.bottom-bar{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  padding:16px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:10px;
+  color:rgba(255,255,255,.2);
+  letter-spacing:1px;
+  opacity:0;
+  animation:fadeIn .5s 3.5s forwards;
+  background:linear-gradient(to top,rgba(0,0,0,.4),transparent);
+}
+.replay-btn{
+  position:absolute;
+  top:20px;right:20px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.3);
+  padding:8px 14px;
+  border-radius:30px;
+  font-size:11px;
+  cursor:pointer;
+  z-index:10;
+  transition:all .3s;
+}
+.replay-btn:hover{
+  background:rgba(255,255,255,.1);
+  color:rgba(255,255,255,.6);
+}
+@media(max-width:500px){
+  .main-title .line{font-size:32px}
+  .new-price-block .amount{font-size:52px}
+  .new-price-block .amount .currency{font-size:20px}
+  .content{padding:30px 20px}
+  .products-row{gap:10px}
+  .product-item{padding:12px 14px}
+  .cta-animated a{font-size:15px;padding:14px 36px}
+  .old-price-block .amount{font-size:18px}
+  .price-showcase{gap:16px}
+}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="glow-orb g1"></div>
+  <div class="glow-orb g2"></div>
+
+  <div class="particles" id="particles"></div>
+
+  <button class="replay-btn" onclick="replayAnimation()">&#x1F504; Replay</button>
+
+  <div class="content">
+    <div class="top-badge"><span>Limited Bundle Offer</span></div>
+    <div class="pharmacy-name">Dr. Sherif Shaaban Pharmacy</div>
+
+    <div class="main-title">
+      <span class="line">Complete Care</span>
+      <span class="line highlight">Bundle</span>
+    </div>
+
+    <div class="price-showcase">
+      <div class="old-price-block">
+        <div class="label">Was</div>
+        <div class="amount">790 EGP</div>
+      </div>
+      <div class="price-divider"></div>
+      <div class="new-price-block">
+        <div class="label">Now Only</div>
+        <div class="amount">520 <span class="currency">EGP</span></div>
+        <div class="save-badge-animated">Save 270 EGP &bull; 34% OFF</div>
+      </div>
+    </div>
+
+    <div class="products-row">
+      <div class="product-item">
+        <img class="product-icon" src="https://derm-active.com/wp-content/uploads/2023/06/ACTI-Clear-Gentle-Cleansing-Gel-150x216.jpg" alt="Cleanser" onerror="this.outerHTML='<div class=product-icon style=font-size:22px>&#x1F9F4;</div>'">
+        <div class="product-info">
+          <div class="name">ActiClear Gel Cleanser 200ml</div>
+          <div class="note">Deep cleansing for acne-prone skin</div>
+          <div class="old-p">270 EGP</div>
+        </div>
+      </div>
+      <div class="product-item">
+        <img class="product-icon" src="https://derm-active.com/wp-content/uploads/2023/06/ACTI-Clear-Hydra-Mattifying-Gel-150x216.jpg" alt="Mattifying Gel" onerror="this.outerHTML='<div class=product-icon style=font-size:22px>&#x2728;</div>'">
+        <div class="product-info">
+          <div class="name">Acti-Clear Hydra-Mattifying Gel 50ml</div>
+          <div class="note">Oil-free moisturizer, mattifying effect</div>
+          <div class="old-p">250 EGP</div>
+        </div>
+      </div>
+      <div class="product-item">
+        <img class="product-icon" src="https://derm-active.com/wp-content/uploads/2023/05/fluid-150x216.jpg" alt="SPF50+" onerror="this.outerHTML='<div class=product-icon style=font-size:22px>&#x2600;&#xFE0F;</div>'">
+        <div class="product-info">
+          <div class="name">Acti-Solaire SPF50+ Ultra Fluid 50ml</div>
+          <div class="note">High protection, ultra-light texture</div>
+          <div class="old-p">220 EGP</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-animated">
+      <a href="#">&#x1F4B0; Get This Deal</a>
+      <div class="sub">While stocks last &bull; Dr. Sherif Shaaban &mdash; Fleming, Alexandria</div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <span>Dr. Sherif Shaaban Pharmacy</span>
+    <span>Fleming, Alexandria</span>
+  </div>
+</div>
+
+<script>
+function createParticles(){
+  var container=document.getElementById('particles');
+  container.innerHTML='';
+  for(var i=0;i<30;i++){
+    var p=document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.width=(2+Math.random()*4)+'px';
+    p.style.height=p.style.width;
+    p.style.animationDuration=(8+Math.random()*12)+'s';
+    p.style.animationDelay=(Math.random()*10)+'s';
+    p.style.opacity=0.2+Math.random()*0.5;
+    container.appendChild(p);
+  }
+}
+createParticles();
+
+function replayAnimation(){
+  var stage=document.getElementById('stage');
+  var clone=stage.cloneNode(true);
+  stage.parentNode.replaceChild(clone,stage);
+  createParticles();
+}
+
+var animElements=document.querySelectorAll('.product-item, .main-title .line, .top-badge, .pharmacy-name, .price-showcase, .cta-animated, .bottom-bar');
+function resetAnim(){
+  animElements.forEach(function(el){
+    el.style.animation='none';
+    el.style.opacity='0';
+    el.style.transform='';
+    void el.offsetWidth;
+  });
+}
+</script>
+</body>
+</html>

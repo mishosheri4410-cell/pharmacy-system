@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
-const publicPath = path.resolve(__dirname, '..');
+const publicPath = path.join(__dirname, 'public');
 app.use(express.static(publicPath, {
   index: false,
   extensions: ['html']

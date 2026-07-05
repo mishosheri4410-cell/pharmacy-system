@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Bundle Offer - Pharmacy</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+.container {
+  max-width: 420px;
+  width: 100%;
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  align-self: flex-start;
+}
+.header {
+  background: linear-gradient(135deg, #1a73e8, #0d47a1);
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
+.header h1 { font-size: 22px; margin-bottom: 6px; letter-spacing: 1px; }
+.header .badge {
+  display: inline-block;
+  background: #ffd600;
+  color: #1a1a1a;
+  padding: 6px 20px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 15px;
+  margin-top: 10px;
+}
+.header .price-before { font-size: 18px; opacity: 0.8; text-decoration: line-through; margin-top: 12px; }
+.header .price-after { font-size: 40px; font-weight: 800; margin-top: 4px; }
+.header .price-after span { font-size: 20px; }
+.header .save-amount {
+  background: rgba(255,255,255,0.2);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  display: inline-block;
+  margin-top: 8px;
+}
+.products {
+  padding: 20px;
+}
+.product {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+}
+.product:last-child { border-bottom: none; }
+.product-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 14px;
+  background: #f0f4ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.product-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
+.product-info { flex: 1; }
+.product-info h3 { font-size: 15px; color: #1a1a1a; margin-bottom: 2px; }
+.product-info .price { font-size: 13px; color: #888; }
+.product-info .price del { color: #ccc; margin-right: 6px; }
+.qr-section {
+  text-align: center;
+  padding: 20px;
+  border-top: 1px dashed #ddd;
+}
+.qr-section p { font-size: 13px; color: #666; margin-top: 10px; }
+#qrcode { display: inline-block; padding: 10px; background: white; border-radius: 12px; }
+.footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: #999;
+  background: #fafafa;
+}
+@media print {
+  body { background: white; padding: 0; }
+  .container { box-shadow: none; max-width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Bundle Offer</h1>
+    <div class="badge">Buy 3 & Save</div>
+    <div class="price-before">740 EGP</div>
+    <div class="price-after"><span>Only</span> 520 <span>EGP</span></div>
+    <div class="save-amount">You save 220 EGP!</div>
+  </div>
+
+  <div class="products">
+    <div class="product">
+      <div class="product-img">
+        <img src="CLEANSER.webp" alt="ActiClear Gel Cleanser" onerror="this.outerHTML='<div style=\'font-size:36px\'>🧴</div>'">
+      </div>
+      <div class="product-info">
+        <h3>Dermactive ActiClear Gel Cleanser 200ml</h3>
+        <div class="price">Sold alone: 270 EGP</div>
+      </div>
+    </div>
+    <div class="product">
+      <div class="product-img">
+        <img src="ACTI CLEAR.webp" alt="Acti-Clear Hydra-Mattifying Gel" onerror="this.outerHTML='<div style=\'font-size:36px\'>✨</div>'">
+      </div>
+      <div class="product-info">
+        <h3>Dermactive Acti-Clear Hydra-Mattifying Gel 50ml</h3>
+        <div class="price">Sold alone: 250 EGP</div>
+      </div>
+    </div>
+    <div class="product">
+      <div class="product-img">
+        <img src="SUNBLOCK.webp" alt="Acti-Solaire SPF50+" onerror="this.outerHTML='<div style=\'font-size:36px\'>☀️</div>'">
+      </div>
+      <div class="product-info">
+        <h3>DERMACTIVE Acti-Solaire SPF50+ Ultra Fluid 50ml</h3>
+        <div class="price">Sold alone: 220 EGP</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="qr-section">
+    <div id="qrcode"></div>
+    <p>Scan to view this offer on your phone</p>
+  </div>
+
+  <div class="footer">
+    <strong>Pharmacy Bundle Offer</strong><br>
+    Valid while stocks last
+  </div>
+</div>
+
+<script>
+new QRCode(document.getElementById("qrcode"), {
+  text: window.location.href,
+  width: 140,
+  height: 140,
+  colorDark: "#0d47a1",
+  colorLight: "#ffffff",
+  correctLevel: QRCode.CorrectLevel.H
+});
+</script>
+</body>
+</html>

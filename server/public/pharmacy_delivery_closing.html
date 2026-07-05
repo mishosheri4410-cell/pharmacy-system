@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تقفيل الدليفري - صيدليات شريف شعبان | Delivery Closing - Sherif Shaaban Pharmacies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1a2a6b;
+  --navy-2:#22368a;
+  --red:#c62828;
+  --green:#1b7a3a;
+  --green-2:#168131;
+  --bg:#f3f4f7;
+  --card:#ffffff;
+  --line:#dfe3ed;
+  --line-strong:#c8cfdf;
+  --muted:#6b7280;
+  --ink:#1a1e2b;
+  --soft:#f7f8fc;
+  --amber:#f59e0b;
+  --radius:16px;
+  --radius-sm:11px;
+  --shadow: 0 6px 24px rgba(19, 28, 64, .07), 0 1px 3px rgba(19,28,64,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family: 'Cairo', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.65;
+}
+a{color:var(--navy)}
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 16px 120px;
+}
+.topbar{
+  background:#fff;
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  max-width:1100px;
+  margin:0 auto;
+  padding:18px 16px 18px;
+  text-align:center;
+}
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-bottom:12px;
+}
+.logo-wrap img{
+  max-height:90px;
+  width:auto;
+  object-fit:contain;
+  display:block;
+}
+.brand-title{
+  margin:0;
+  font-size:26px;
+  font-weight:800;
+  color:var(--ink);
+  letter-spacing:-0.1px;
+}
+.brand-title .en{
+  display:block;
+  font-size:14px;
+  font-weight:600;
+  color:var(--muted);
+  margin-top:2px;
+}
+.brand-sub{
+  margin:6px 0 0;
+  font-size:16px;
+  font-weight:700;
+  color:var(--navy);
+}
+.brand-sub .en{
+  display:block;
+  font-size:12.8px;
+  font-weight:500;
+  color:var(--muted);
+}
+
+/* Cards / sections */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding:18px;
+  margin-top:16px;
+}
+.section-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:2px 0 14px 0;
+  padding-bottom:12px;
+  border-bottom:1px dashed #e4e7f0;
+  flex-wrap:wrap;
+}
+.section-num{
+  width:32px;
+  height:32px;
+  border-radius:10px;
+  background:#eef1f9;
+  color:var(--navy);
+  font-weight:800;
+  font-size:14px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.section-title{
+  font-weight:800;
+  font-size:17px;
+  color:#1b2447;
+}
+.section-title .en{
+  display:block;
+  font-size:11.8px;
+  font-weight:500;
+  color:var(--muted);
+}
+
+/* Form grid */
+.grid{
+  display:grid;
+  gap:13px;
+}
+.grid-2{
+  grid-template-columns:1fr 1fr;
+}
+@media (max-width:640px){
+  .grid-2{grid-template-columns:1fr}
+}
+.field{}
+.field-label{
+  display:block;
+  font-weight:700;
+  font-size:14.5px;
+  margin-bottom:7px;
+  color:#2a3247;
+}
+.field-label .en{
+  display:block;
+  font-size:11.8px;
+  font-weight:500;
+  color:var(--muted);
+}
+.input, select, textarea{
+  width:100%;
+  appearance:none;
+  font-family:'Cairo',inherit;
+  font-size:15.5px;
+  padding:12px 13px;
+  border:1.6px solid var(--line-strong);
+  border-radius:12px;
+  background:#fcfdff;
+  color:var(--ink);
+  outline:none;
+  transition:.15s border-color, .15s box-shadow, .15s background;
+  min-height:48px;
+}
+.input::placeholder, textarea::placeholder{color:#9aa3b7}
+.input:focus, select:focus, textarea:focus{
+  border-color:var(--navy);
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(26,42,107,.12);
+}
+textarea{ min-height:110px; resize:vertical; }
+select{
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='%236b7280' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:left 12px center;
+  padding-left:38px;
+}
+.help{
+  font-size:12.5px; color:var(--muted); margin-top:6px;
+}
+
+/* ===== Deliveries Table (timed) ===== */
+.delivery-table-wrap{
+  overflow-x:auto;
+  -webkit-overflow-scrolling: touch;
+  border:1.5px solid var(--line);
+  border-radius:14px;
+  background:#fcfdff;
+}
+.delivery-table{
+  min-width:1290px;
+}
+.delivery-table-head{
+  display:grid;
+  grid-template-columns: 118px 148px 132px 136px 136px 94px 120px 114px 144px minmax(170px,1fr) 54px;
+  gap:8px;
+  padding:11px 12px 10px;
+  background:#f4f6fb;
+  border-bottom:1px solid var(--line);
+  font-size:12px;
+  font-weight:800;
+  color:#48526b;
+}
+.delivery-table-head span .en{
+  display:block;
+  font-weight:600;
+  color:#8892a9;
+  font-size:10.7px;
+}
+.delivery-list{
+  display:flex;
+  flex-direction:column;
+}
+.delivery-row{
+  display:grid;
+  grid-template-columns: 118px 148px 132px 136px 136px 94px 120px 120px 114px 144px minmax(170px,1fr) 54px;
+  gap:8px;
+  padding:10px 12px;
+  align-items:center;
+  border-bottom:1px solid #e9ecf4;
+}
+.delivery-row:last-child{border-bottom:none}
+.delivery-row:nth-child(even){ background:#f9fafd;}
+.delivery-row .dcell{ min-width:0 }
+.delivery-row .input, .delivery-row select{
+  min-height:46px;
+  font-size:14.7px;
+  padding:10px 11px;
+  background:#fff;
+  border-radius:11px;
+}
+.delivery-row select{ padding-left:34px; background-position:left 8px center; }
+.delivery-row .input[type="time"]{
+  font-family:'Cairo',inherit;
+  font-weight:700;
+  letter-spacing: .2px;
+}
+
+/* Time buttons */
+.btn-time{
+  width:100%;
+  min-height:46px;
+  border-radius:10px;
+  font-family:'Cairo',inherit;
+  font-weight:800;
+  font-size:13.9px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  transition:.13s;
+  padding:8px 6px;
+  background:#fff;
+}
+.btn-time:active{ transform: translateY(1px);}
+.btn-time.start{
+  border:1.7px solid #b9dec6;
+  color:var(--green);
+  background:#f3fbf6;
+}
+.btn-time.start:hover{ background:#e6f5ec;}
+.btn-time.end{
+  border:1.7px solid #efc2c2;
+  color:var(--red);
+  background:#fff6f6;
+}
+.btn-time.end:hover{ background:#ffefef;}
+.btn-time:disabled{
+  opacity:.48;
+  cursor:not-allowed;
+  background:#f5f6fa;
+  color:#9aa0b4;
+  border-color:#d8dce7;
+}
+.time-wrap{
+  position:relative;
+}
+.time-ok{
+  font-size:10.7px;
+  font-weight:700;
+  color:var(--green);
+  margin-top:3px;
+}
+.time-ok.end-ok{ color:var(--red); }
+.time-input-wrap .input{ text-align:center; font-weight:700; }
+
+/* Duration cell */
+.duration-cell{
+  background:#eef1f9;
+  border:1px solid #d9def0;
+  border-radius:10px;
+  min-height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  color:var(--navy);
+  font-size:14.6px;
+}
+.duration-cell.empty{
+  background:#f6f7fb;
+  color:#a6adbe;
+  font-weight:700;
+}
+
+/* Delete button */
+.icon-btn{
+  border:1px solid #efd0d0;
+  background:#fff5f5;
+  color:var(--red);
+  border-radius:10px;
+  padding:0;
+  width:42px;
+  height:42px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:'Cairo',inherit;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.icon-btn:hover{background:#ffeaea}
+
+/* Scroll hint */
+.scroll-hint{
+  font-size:12.3px;
+  color:#6f788f;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-bottom:8px;
+}
+.scroll-hint .en{ color:#8f97ab; font-weight:600; }
+.scroll-hint svg{ flex-shrink:0; opacity:.85; }
+@media(min-width:980px){
+  .scroll-hint{ display:none; }
+}
+
+/* Empty state */
+.empty-deliveries{
+  border:1.5px dashed #c9cfde;
+  background:#f7f8fc;
+  border-radius:14px;
+  padding:26px 16px;
+  text-align:center;
+  color:#6b758c;
+  font-weight:600;
+}
+.empty-deliveries .en{display:block;font-size:13px;color:#8d95aa;font-weight:500}
+
+/* Sum bar */
+.sum-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 18px;
+  background:#f4f6fb;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:11px 14px;
+  margin-top:10px;
+  font-size:14px;
+  font-weight:700;
+  color:#2c3757;
+}
+.sum-bar span{color:var(--navy)}
+.sum-bar .slabel{font-weight:600;color:#5d6885;margin-left:4px}
+
+.add-row-btn{
+  width:100%;
+  margin-top:10px;
+  border:1.9px dashed #b8bfd3;
+  background:#f7f8fc;
+  color:#2b3a6b;
+  font-family:'Cairo',inherit;
+  font-weight:800;
+  font-size:15.5px;
+  padding:14px;
+  border-radius:13px;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.add-row-btn:hover{background:#eef1f9}
+
+/* Totals card */
+.totals-card{
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+  border:1.6px solid #d9deea;
+}
+.totals-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+}
+@media(min-width:620px){
+  .totals-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(min-width:980px){
+  .totals-grid{grid-template-columns:repeat(3,1fr)}
+}
+.total-box{
+  background:#f5f6fb;
+  border:1px solid #e3e6f1;
+  border-radius:13px;
+  padding:12px 13px;
+}
+.total-box strong{
+  display:block;
+  font-size:21px;
+  font-weight:800;
+  color:#1b2447;
+  letter-spacing:-.2px;
+}
+.total-box .tlabel{font-size:13px;font-weight:700;color:#505b77}
+.total-box .tlabel .en{display:block;font-size:11px;color:#8891a6;font-weight:500}
+.total-box.time-box strong{ color: var(--navy-2); }
+.total-box.net{
+  grid-column:1 / -1;
+  background: #f4f6ff;
+  border:1.8px solid #bdc8e6;
+}
+@media(min-width:620px){
+  .total-box.net{grid-column:1 / -1}
+}
+.total-box.net strong{color:var(--red)}
+.total-box.net.cash-positive strong{color:var(--navy)}
+
+/* Expenses */
+.expense-list{display:flex;flex-direction:column;gap:10px}
+.expense-row{
+  display:grid;
+  grid-template-columns: 140px 1fr 44px;
+  gap:9px;
+  align-items:end;
+  background:#fbfcff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px;
+}
+@media(max-width:520px){
+  .expense-row{grid-template-columns: 1fr 1fr 44px}
+  .expense-row .exp-reason{grid-column:1 / -1; }
+}
+.exp-label{font-size:12.5px;font-weight:700;color:#3d4661;margin-bottom:5px}
+.exp-label .en{display:block;color:#8891a6;font-size:11px;font-weight:500}
+.expense-total{
+  margin-top:10px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:#f5f6fb;border:1px solid #e2e6f1;border-radius:12px;padding:10px 13px;
+  font-weight:800;color:#2a3452;
+}
+.expense-after{
+  margin-top:8px;
+  background:#f0faf2;
+  border:1px solid #cfe8d6;
+  color:#175f30;
+  border-radius:12px;
+  padding:10px 13px;
+  font-weight:800;
+  display:flex;justify-content:space-between;align-items:center;
+}
+
+/* Signature */
+.sig-box{
+  border:1.7px dashed #c9cfdc;
+  background:#fcfdff;
+  border-radius:13px;
+  padding:16px;
+}
+.sig-line{
+  border-top:1.8px solid #2a3247;
+  width:240px;
+  max-width:100%;
+  margin-top:22px;
+  padding-top:6px;
+  font-size:13.5px;
+  color:#545d76;
+  font-weight:600;
+}
+.sig-line .en{display:block;font-size:11.5px;color:#8a92a8}
+
+/* Actions */
+.actions-card{
+  padding:18px;
+}
+.wa-number-wrap{
+  margin-bottom:13px;
+}
+.action-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.action-grid .wa{grid-column:1 / -1}
+@media(min-width:560px){
+  .action-grid{grid-template-columns:1fr 1fr 1.6fr}
+  .action-grid .wa{grid-column:auto}
+}
+.btn{
+  font-family:'Cairo',inherit;
+  border-radius:12px;
+  padding:14px 16px;
+  font-size:15.7px;
+  font-weight:800;
+  cursor:pointer;
+  border:1.6px solid transparent;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  transition:.13s;
+  min-height:52px;
+  text-decoration:none;
+}
+.btn:active{transform:translateY(1px)}
+.btn-primary{
+  background:var(--navy);
+  color:#fff;
+}
+.btn-primary:hover{background:var(--navy-2)}
+.btn-ghost{
+  background:#fff;
+  border-color:#d4d9e6;
+  color:#2b3247;
+}
+.btn-ghost:hover{background:#f5f6fb}
+.btn-danger{
+  background:#fff5f5;
+  border-color:#f0c9c9;
+  color:var(--red);
+}
+.btn-danger:hover{background:#ffebeb}
+.btn-green{
+  background:var(--green);
+  color:#fff;
+}
+.btn-green:hover{background:var(--green-2)}
+
+/* Sticky mobile summary */
+.mobile-summary{
+  position:fixed;
+  right:0;left:0;bottom:0;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(8px);
+  border-top:1px solid #d8dce7;
+  box-shadow: 0 -8px 28px rgba(19,28,64,.08);
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  z-index:40;
+}
+.mobile-summary .ms-block b{display:block; font-size:16.5px; color:var(--navy); line-height:1.25}
+.mobile-summary .ms-block small{display:block; font-size:11.3px; color:#69728a; font-weight:600}
+.mobile-summary .ms-net b{color:var(--red)}
+@media(min-width:760px){ .mobile-summary{display:none} body{padding-bottom:0} }
+
+/* Utility */
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.hr-soft{border:none;border-top:1px dashed #e2e6f2;margin:12px 0}
+  .badge-soft{
+    background:#eef1f9;color:#2b3a6d;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;
+  }
+  .mode-section{display:none}
+  .mode-section.active{display:block}
+  .pin-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:999;padding:20px}
+  .pin-box{background:#fff;border-radius:18px;padding:30px 25px;width:100%;max-width:300px;text-align:center}
+  .pin-box h3{font-size:16px;margin-bottom:4px}
+  .pin-box p{font-size:12px;color:#888;margin-bottom:15px}
+  .pin-input{width:100%;padding:14px;border:2px solid #e0e7ef;border-radius:10px;font-size:22px;text-align:center;letter-spacing:8px;outline:none;margin-bottom:12px;direction:ltr}
+  .pin-input:focus{border-color:#1a2a6b}
+  .pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+  .pin-key{padding:15px;border:none;border-radius:10px;font-size:20px;font-weight:700;cursor:pointer;background:#f0f4f8;transition:all .1s}
+  .pin-key:active{background:#d0d8e4;transform:scale(.95)}
+  .pin-key.clear{color:#c62828}
+  .pin-key.ok{background:#1a2a6b;color:#fff}
+  .hidden{display:none!important}
+
+/* Print */
+@media print{
+  body{background:#fff}
+  .topbar{border:none}
+  .card{box-shadow:none;border-color:#c9cfdc;break-inside:avoid}
+  .no-print{display:none !important}
+  .container{padding:0}
+  .mobile-summary{display:none !important}
+  .input, select, textarea{border-color:#b9bfd0; background:#fff}
+  a{color:#000; text-decoration:none}
+  .delivery-table-wrap{ border-color:#c9cfdc; overflow:visible }
+  .delivery-table{ min-width: auto; }
+  .delivery-table-head{ font-size:10px }
+  .delivery-row{ break-inside:avoid }
+  .btn-time{ border-color:#999 }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Preload logo from container for JS base64 conversion (server resolves container:// to CDN) -->
+  <img id="logoSource" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIbGNtcwIQAABtbnRyUkdCIFhZWiAH4gADABQACQAOAB1hY3NwTVNGVAAAAABzYXdzY3RybAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWhhbmSdkQA9QICwPUB0LIGepSKOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAABxjcHJ0AAABDAAAAAx3dHB0AAABGAAAABRyWFlaAAABLAAAABRnWFlaAAABQAAAABRiWFlaAAABVAAAABRyVFJDAAABaAAAAGBnVFJDAAABaAAAAGBiVFJDAAABaAAAAGBkZXNjAAAAAAAAAAV1UkdCAAAAAAAAAAAAAAAAdGV4dAAAAABDQzAAWFlaIAAAAAAAAPNUAAEAAAABFslYWVogAAAAAAAAb6AAADjyAAADj1hZWiAAAAAAAABilgAAt4kAABjaWFlaIAAAAAAAACSgAAAPhQAAtsRjdXJ2AAAAAAAAACoAAAB8APgBnAJ1A4MEyQZOCBIKGAxiDvQRzxT2GGocLiBDJKwpai5+M+s5sz/WRldNNlR2XBdkHWyGdVZ+jYgskjacq6eMstu+mcrH12Xkd/H5////2wBDAAcHBwcHBwwHBwwRDAwMERcRERERFx4XFxcXFx4kHh4eHh4eJCQkJCQkJCQrKysrKysyMjIyMjg4ODg4ODg4ODj/2wBDAQkJCQ4NDhkNDRk7KCEoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCATmBOYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExEgZBUWETcRBxgSKRoFBCobHwFSMz0eFiJPEFQ1QGF1UkNiMoQhIkWyViJoY2NEQkRUZXFyQlRjN0dYIkZXODkqKis0Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6QooooAKKKKACiiigAooooAKKSloAKKKSgBaKSloAKKKKACiijFABRRRQAUUUUAFGaKKACiiigAooooAM0UGkoAWiiigAooooAKSlooAKKKKACikpaACiiigAooxSYoAWiikoAWiiigAooooAKKKSgBaKKSgBaKKKAAUUUUABpM0tFABSUtFABRRSZoAWiiigAzSUUtABRRmigAooooAKKMUUAFFFFABRRRQAZooooAKKKKACiiigAooooAKKKKADNFFFABRRRQAUUgpaACiiigBKWikoAWiikoAWiiigAooooAKKOtFABRRigAooooAM0UUUAFFFFABRRRQAUUYpM0ALRRRQAUUdaSgBaKKKACiikoAWiiigAooooAKKKKACiiigAooooAKKKKACijrRQAUUUlAC0UUUAFFFJQAtFFFABRRR3oAKKKKAEpaKKAE4paKKACiiigApKWigAooooAKSlooAKKKKACiiigAFFFJQAUtHSigAooooAKDRRQAUnNLRQAUUUUAFFFJQAtJS0UAJS0nFGaAFoopKAFoopKAFpKWigAooooAKKKSgBaKKKACiiigAooooAKKKKACiiigAooooAKKKSgBaKSloAKKKKACkpaSgBaKKKACikpaACiikoAKWikoAWiiigAooooAKSlooASlooxQAUlFLQAUUlLQAlLRijmgAooooAKDRRQAUlLRQAUUUUAFFJS0AFFFFACZpaKSgBaKKKACkpaTvQAUUtJQAtJRS0AFFFFACUtFFABRSUtABRSUtACUtFFABRRRQAcUUlLQAUmKKWgAooooASloooAKKKKAEpaKKAA0UUUAFFFFABRRSUALRRSUALRRRQAUUUUAFFFJQAtFFFACUtJS0AFFJS0AFJS0UAFFJS0AFFFJQAtFFFABxQKKM0ALRSUUAFFFFABRRRQAlLRRQAlLRRQAUlLRQAUlLSUALRR1pKAFooooASlNJS0AFFFJQAtJilooAKKKKACiiigAooooAKTFLRQAUUlLQAlFLRQAUUUdKACikpaACkpaBQAUUUUAFFFJQAtFFJQAUooooAKKKKACikpaACiiigApKWigAoopKACilooAKKKKAE5oxS0GgAoNFJQAtFFGKACikpaACikpaACiiigBKKKKACilooAKKKKACijFJQAtHNFFABRRSUALRRSUALSUCloASlopKAFooooAKSlooAKKSloAKSlooASloooAKKMUUAFJS5ooAKSlooAKKKKACiiigAooooAKKKKACikpaACiiigAooooAKKKKACikooAXijFFBoAKKKKACkpetJQAtFFFACYpaKKACiiigBKXtRRQAUUUUAFFFFABRRRQAlFLRQAUcUUUAFFJS0AFFFFABRRRQAUUUUAFFFFABRSZooAWijpRQAUUUUAJS0UUAFFFJQAUtFFACUtBooAKKKKACkpaKACkpaSgBaSlooAKKKSgApaKKACiiigAopKWgAooooAKKKSgBaKKKACiikoAWikpaACiikoAWiikoAWiikoAWigUlAC0UUlAC0lLSUALiikpaACkpaKACkpaSgBaPpSUooAKKKKACkopaACikpaACiiigBKXmiigAoopKAFpKWigAooooAKKKKACjFFFACGilooASiloFABRSUtAAKKKKACiiigBKWikoAWiiigApKWigAooooAKKKKACkpc0UAJS0dKKACiiigAo60UUAFFFFABQaKKAEpaSigBaKKKACiiigAooooAKSiloAKKKKACiiigAooooAKSlo4oAKSiigBaKKKAEpaKKACiiigAooozQAUUUUAJS0UUAFFJS0AFFFFABRRSCgBaKSloAKKWkoAKKKKACiikoAWikpRQAUlHeloAKBSUtABRSZpaAEpaKKACiiigApKKWgAooooAKKKKACiiigBKWkpaACiiigAooooAKKKKACiiigAooo4oAKBRRQAUlLRQAUlFFAC0UUlAC0UCigAooooAKSlooAKKOtFABRRRQAUUUUAFFJRQAtJS0UAFFJS0AJS0UUAFJS0CgAooooAKKKKACikooAWikpaACiiigApKWigAooooAKKKKACiiigAIoopOaAFooooAKKKSgBaKQ0UALRSUtACUUtFABRRRQAUmKWigAoopKACloo7UAFFJS0AJS0lLQAlFFFAC0lLRQAlLRSUALRRRQAlFLSUAFLRRQAUCiigAopKWgAopKWgBOaWikoAWikooAWiikoAWiiigBKWiigAooooAKSlooAQUtFFABRQaSgBaSlooAKKKKACiiigAAAAAAAAhAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAP/////////////////////KAAA=" alt="" hidden referrerpolicy="no-referrer">
+
+  <div class="topbar no-print" aria-hidden="false">
+    <div class="topbar-inner">
+      <div class="logo-wrap">
+        <img id="logoDisplay" src="https://via.placeholder.com/360x120/ffffff/1a2a6b?text=Sherif+Shaaban+Pharmacies" alt="شعار صيدليات شريف شعبان - Sherif Shaaban Pharmacies Logo" style="max-height:90px">
+      </div>
+      <h1 class="brand-title">
+        تقفيل الدليفري
+        <span class="en">Delivery Closing Report</span>
+      </h1>
+      <p class="brand-sub">
+        صيدليات شريف شعبان
+        <span class="en">Sherif Shaaban Pharmacies – Alexandria, Egypt</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- PIN Overlay -->
+  <div class="pin-overlay hidden" id="pinOverlay">
+    <div class="pin-box">
+      <h3>🔒 حماية المدير</h3>
+      <p>أدخل PIN للوصول للإعدادات</p>
+      <input class="pin-input" id="pinInput" type="password" inputmode="numeric" maxlength="6" placeholder="******" readonly>
+      <div class="pin-grid" id="pinGrid"></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-danger" style="flex:1;font-size:13px;padding:12px" onclick="cancelPin()">إلغاء</button>
+        <button class="btn btn-primary" style="flex:1;font-size:13px;padding:12px" onclick="submitPin()">تأكيد</button>
+      </div>
+      <span style="color:#1a2a6b;font-size:12px;cursor:pointer;text-align:center;display:block;margin-top:10px" onclick="switchToDoctor()">⬅ الرجوع لوضع الدكتور</span>
+    </div>
+  </div>
+
+  <main class="container" id="app">
+
+    <!-- Doctor Mode -->
+    <div class="mode-section active" id="doctorSection">
+
+    <!-- 1-5 Driver / shift info -->
+    <section class="card">
+      <div class="section-head">
+        <div class="section-num">١</div>
+        <div class="section-title">بيانات المندوب والشيفت
+          <span class="en">Driver & Shift Information</span>
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="field">
+          <label class="field-label" for="drName">اسم الدكتور
+            <span class="en">Doctor Name</span>
+          </label>
+          <input class="input" id="drName" type="text" placeholder="اسم الدكتور">
+        </div>
+        <div class="field">
+          <label class="field-label" for="driverName">اسم مندوب التوصيل
+            <span class="en">Delivery Person Name</span>
+          </label>
+          <input class="input" id="driverName" type="text" placeholder="مثال: أحمد محمد" autocomplete="name">
+        </div>
+        <div class="field">
+          <label class="field-label" for="driverMobile">رقم موبايل المندوب
+            <span class="en">Driver Mobile</span>
+          </label>
+          <input class="input" id="driverMobile" type="tel" inputmode="tel" placeholder="01xxxxxxxxx">
+        </div>
+        <div class="field">
+          <label class="field-label" for="reportDate">التاريخ
+            <span class="en">Date</span>
+          </label>
+          <input class="input" id="reportDate" type="date">
+        </div>
+        <div class="field">
+          <label class="field-label" for="shiftStart">وقت بداية التوصيل
+            <span class="en">Shift Start</span>
+          </label>
+          <input class="input" id="shiftStart" type="time">
+        </div>
+        <div class="field">
+          <label class="field-label" for="shiftEnd">وقت نهاية التوصيل
+            <span class="en">Shift End</span>
+          </label>
+          <input class="input" id="shiftEnd" type="time">
+        </div>
+      </div>
+    </section>
+
+    <!-- Deliveries -->
+    <section class="card">
+      <div class="section-head">
+        <div class="section-num">٢</div>
+        <div class="section-title">جدول الطلبات (مع توقيت التوصيل)
+          <span class="en">Deliveries Table – with Delivery Timing</span>
+        </div>
+        <span class="badge-soft no-print" style="margin-right:auto">Start → End = مدة تلقائية</span>
+      </div>
+
+      <div class="scroll-hint no-print">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        اسحب الجدول يمين/يسار لعرض كل الأعمدة
+        <span class="en">Swipe to see all columns</span>
+      </div>
+
+      <div class="delivery-table-wrap">
+        <div class="delivery-table">
+          <div class="delivery-table-head" aria-hidden="true">
+            <span>رقم الأوردر<span class="en">Order No</span></span>
+            <span>موبايل العميل<span class="en">Customer Mobile</span></span>
+            <span>منطقة العميل<span class="en">Customer Area</span></span>
+            <span>بدء التوصيل<span class="en">Start</span></span>
+            <span>انتهاء التوصيل<span class="en">End</span></span>
+            <span>المدة<span class="en">Duration</span></span>
+            <span>قيمة الأوردر<span class="en">Order Total</span></span>
+            <span>الكاش المحصل<span class="en">Cash Collected</span></span>
+            <span>رسوم التوصيل<span class="en">Delivery Fee</span></span>
+            <span>طريقة الدفع<span class="en">Payment</span></span>
+            <span>ملاحظات<span class="en">Notes</span></span>
+            <span>حذف<span class="en">Del</span></span>
+          </div>
+          <div id="deliveryList" class="delivery-list"></div>
+        </div>
+      </div>
+
+      <div id="emptyDeliveries" class="empty-deliveries" style="display:none; margin-top:10px">
+        لا توجد طلبات بعد — اضغط "إضافة طلب" بالأسفل
+        <span class="en">No orders yet — tap Add Order below</span>
+      </div>
+
+      <div class="sum-bar" id="deliverySumBar">
+        <div><span class="slabel">الطلبات:</span> <span id="sumBarCount">0</span></div>
+        <div><span class="slabel">إجمالي الوقت:</span> <span id="sumBarTime">0</span> د</div>
+        <div><span class="slabel">إجمالي الطلبات:</span> <span id="sumBarOrders">0</span> ج.م</div>
+        <div><span class="slabel">الكاش:</span> <span id="sumBarCash">0</span> ج.م</div>
+        <div><span class="slabel">التوصيل:</span> <span id="sumBarFees">0</span> ج.م</div>
+      </div>
+
+      <button class="add-row-btn no-print" id="addDeliveryBtn" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 5v14M5 12h14"/></svg>
+        إضافة طلب / Add Order
+      </button>
+      <div class="help">اضغط "بدء" عند خروج الطلب، و "انتهاء" عند التسليم — المدة تُحسب تلقائياً. Tap Start when you leave, End when delivered.</div>
+    </section>
+
+    <!-- Totals -->
+    <section class="card totals-card">
+      <div class="section-head" style="border-bottom:none; padding-bottom:2px; margin-bottom:10px">
+        <div class="section-num" style="background:#e4edfa">Σ</div>
+        <div class="section-title">الإجماليات (تحديث فوري)
+          <span class="en">Totals – Live Auto-calculate</span>
+        </div>
+      </div>
+
+      <div class="totals-grid">
+        <div class="total-box">
+          <div class="tlabel">عدد الطلبات <span class="en">Total Orders</span></div>
+          <strong id="t_orders">0</strong>
+        </div>
+        <div class="total-box time-box">
+          <div class="tlabel">إجمالي وقت التوصيل <span class="en">Total Delivery Time</span></div>
+          <strong><span id="t_time">0</span> <span style="font-size:13px;font-weight:700;color:#6b7280">د</span></strong>
+        </div>
+        <div class="total-box">
+          <div class="tlabel">إجمالي قيمة الطلبات <span class="en">Total Order Value</span></div>
+          <strong><span id="t_orderValue">0</span> <span style="font-size:13px;font-weight:700;color:#6b7280">ج.م</span></strong>
+        </div>
+        <div class="total-box">
+          <div class="tlabel">إجمالي الكاش المحصل <span class="en">Total Cash Collected</span></div>
+          <strong><span id="t_cash">0</span> <span style="font-size:13px;font-weight:700;color:#6b7280">ج.م</span></strong>
+        </div>
+        <div class="total-box">
+          <div class="tlabel">إجمالي رسوم التوصيل <span class="en">Total Delivery Fees</span></div>
+          <strong><span id="t_fees">0</span> <span style="font-size:13px;font-weight:700;color:#6b7280">ج.م</span></strong>
+        </div>
+        <div class="total-box net" id="netBox">
+          <div class="tlabel">صافي التسليم للصيدلية <span class="en">Net Cash to Pharmacy = Cash – Fees</span></div>
+          <strong><span id="t_net">0</span> <span style="font-size:13px;font-weight:700">ج.م</span></strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- Driver Expenses -->
+    <section class="card">
+      <div class="section-head">
+        <div class="section-num">٣</div>
+        <div class="section-title">مصروفات المندوب
+          <span class="en">Driver Expenses</span>
+        </div>
+      </div>
+
+      <div id="expenseList" class="expense-list"></div>
+
+      <button class="add-row-btn no-print" id="addExpenseBtn" type="button" style="padding:11px; font-size:14.5px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 5v14M5 12h14"/></svg>
+        إضافة مصروف / Add Expense
+      </button>
+
+      <div class="expense-total">
+        <span>إجمالي المصروفات <span class="muted" style="font-weight:600">/ Total Expenses</span></span>
+        <span><span id="exp_total">0</span> ج.م</span>
+      </div>
+      <div class="expense-after">
+        <span>الصافي بعد المصروفات <span style="font-weight:600;opacity:.85">/ Net After Expenses</span></span>
+        <span><span id="exp_net_after">0</span> ج.م</span>
+      </div>
+      <div class="help">تُخصم المصروفات تلقائياً من صافي التسليم.</div>
+    </section>
+
+    <!-- Extra Notes -->
+    <section class="card">
+      <div class="section-head">
+        <div class="section-num">٤</div>
+        <div class="section-title">ملاحظات إضافية
+          <span class="en">Extra Notes</span>
+        </div>
+      </div>
+      <textarea id="extraNotes" placeholder="أي ملاحظات للصيدلية / Any notes for the pharmacy..."></textarea>
+    </section>
+
+    <!-- Signature -->
+    <section class="card">
+      <div class="section-head">
+        <div class="section-num">٥</div>
+        <div class="section-title">توقيع المندوب
+          <span class="en">Driver Signature</span>
+        </div>
+      </div>
+      <div class="sig-box">
+        <div class="grid grid-2">
+          <div class="field">
+            <label class="field-label">اسم الموقّع
+              <span class="en">Signer Name</span>
+            </label>
+            <input class="input" id="signerName" type="text" placeholder="اسم المندوب بالكامل">
+          </div>
+          <div class="field">
+            <label class="field-label">وقت التسليم
+              <span class="en">Handover Time</span>
+            </label>
+            <input class="input" id="handoverTime" type="time">
+          </div>
+        </div>
+        <div class="sig-line">توقيع المندوب / Driver Signature: ______________________</div>
+        <div class="help">عند الطباعة، وقّع يدوياً على الخط أعلاه.</div>
+      </div>
+    </section>
+
+    <!-- Actions -->
+    <section class="card actions-card no-print">
+      <div class="section-head" style="border-bottom:none; margin-bottom:8px; padding-bottom:0">
+        <div class="section-num" style="background:#e6f4ea; color:#176b32">⇧</div>
+        <div class="section-title">إرسال التقرير
+          <span class="en">Submit Report</span>
+        </div>
+      </div>
+
+      <div class="wa-number-wrap">
+        <label class="field-label" for="pharmacyWa">رقم واتساب الصيدلية
+          <span class="en">Pharmacy WhatsApp Number</span>
+        </label>
+        <input class="input" id="pharmacyWa" type="tel" inputmode="tel" placeholder="2010xxxxxxx">
+        <div class="help">يُحفظ تلقائياً على هذا الجهاز. اكتب الرقم بالصيغة الدولية بدون + ، مثال: 2010xxxxxxx</div>
+      </div>
+
+      <div class="action-grid">
+        <button class="btn btn-ghost" id="printBtn" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><rect x="6" y="14" width="12" height="8" rx="1"/><path d="M6 18H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/></svg>
+          طباعة / Print
+        </button>
+        <button class="btn btn-danger" id="resetBtn" type="button">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+          مسح / Reset
+        </button>
+        <button class="btn btn-green wa" id="whatsappBtn" type="button">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.1c-.3-.15-1.74-.86-2.01-.96-.27-.1-.47-.15-.67.15-.2.3-.76.96-.93 1.15-.17.2-.34.22-.64.08-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.29.3-.49.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.06 2.87 1.21 3.07.15.2 2.09 3.19 5.06 4.48.71.3 1.26.49 1.69.63.71.22 1.35.19 1.86.12.57-.08 1.74-.71 1.99-1.4.25-.69.25-1.28.17-1.4-.07-.12-.27-.2-.57-.35z"/><path d="M12 2a10 10 0 0 0-8.65 15.04L2 22l4.99-1.31A10 10 0 1 0 12 2zm0 18.1a8.1 0 0 1-4.12-1.12l-.29-.17-2.96.78.79-2.89-.19-.3A8.1 0 1 1 12 20.1z"/></svg>
+          إرسال واتساب / Send via WhatsApp
+        </button>
+      </div>
+    </section>
+
+    <p class="small muted" style="text-align:center;margin-top:18px">
+      صيدليات شريف شعبان – الإسكندرية • Sherif Shaaban Pharmacies, Alexandria<br>
+      تقرير تقفيل الدليفري • Delivery Closing Report
+    </p>
+
+    </div><!-- end doctorSection -->
+
+    <!-- Manager Mode -->
+    <div class="mode-section" id="managerSection">
+      <section class="card">
+        <div class="section-head">
+          <div class="section-num" style="background:#eef1f9">👑</div>
+          <div class="section-title">لوحة المدير
+            <span class="en">Manager Panel</span>
+          </div>
+        </div>
+        <p style="font-size:13px;color:#666;margin-bottom:12px;">ضبط رقم واتساب المدير و PIN. الإعدادات مشتركة مع جميع التطبيقات.</p>
+        <div class="grid grid-2">
+          <div class="field">
+            <label class="field-label">رقم واتساب المدير
+              <span class="en">Manager WhatsApp</span>
+            </label>
+            <input class="input" id="mgrWa" type="tel" inputmode="numeric" placeholder="مثال: 201234567890">
+          </div>
+          <div class="field">
+            <label class="field-label">PIN المدير (4-6 أرقام)
+              <span class="en">Manager PIN</span>
+            </label>
+            <input class="input" id="mgrPin" type="password" inputmode="numeric" maxlength="6" placeholder="******">
+          </div>
+        </div>
+        <button class="btn" style="background:#1a2a6b;color:#fff;width:100%;margin-top:8px" onclick="saveMgrSettings()">💾 حفظ الإعدادات</button>
+      </section>
+      <button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="switchToDoctor()">⬅ الرجوع لوضع الدكتور</button>
+    </div>
+
+  </main>
+
+  <!-- Sticky mobile summary -->
+  <div class="mobile-summary no-print" id="mobileSummary" aria-live="polite">
+    <div class="ms-block">
+      <small>الطلبات / Orders</small>
+      <b id="ms_orders">0</b>
+    </div>
+    <div class="ms-block">
+      <small>الكاش / Cash</small>
+      <b id="ms_cash">0 ج.م</b>
+    </div>
+    <div class="ms-block ms-net">
+      <small>الصافي / Net</small>
+      <b id="ms_net">0 ج.م</b>
+    </div>
+  </div>
+
+<script src="shared.js"></script>
+<script>
+let currentUser = null
+let managerPin = ''
+let managerWa = ''
+/* ---------- Logo: convert container image to base64 for offline/print ---------- */
+(function initLogo(){
+  const srcImg = document.getElementById('logoSource');
+  const outImg = document.getElementById('logoDisplay');
+  function setLogo(url){
+    outImg.src = url;
+    try { localStorage.setItem('ssp_logo_data', url); } catch(e){}
+  }
+  // Try cached first
+  try {
+    const cached = localStorage.getItem('ssp_logo_data');
+    if(cached && cached.startsWith('data:image')) { outImg.src = cached; }
+  } catch(e){}
+  function convert(){
+    try {
+      const img = srcImg;
+      if(!img || !img.complete || img.naturalWidth === 0) return false;
+      const canvas = document.createElement('canvas');
+      const maxH = 180;
+      const scale = Math.min(1, maxH / img.naturalHeight);
+      canvas.width = img.naturalWidth * scale;
+      canvas.height = img.naturalHeight * scale;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+      setLogo(dataUrl);
+      return true;
+    } catch(e){ return false; }
+  }
+  if(srcImg){
+    if(srcImg.complete) { convert(); }
+    srcImg.addEventListener('load', convert);
+  }
+})();
+
+/* ---------- Utilities ---------- */
+const $ = (s, r=document)=>r.querySelector(s);
+const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+const egp = n => (isFinite(n) ? Number(n).toLocaleString('en-US', {maximumFractionDigits:2}) : '0');
+const toNum = v => { const n = parseFloat(String(v).replace(/,/g,'')); return isFinite(n) ? n : 0; };
+
+function nowHHMM(){
+  const d = new Date();
+  return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+function parseMinutes(hhmm){
+  if(!hhmm || !hhmm.includes(':')) return null;
+  const [h, m] = hhmm.split(':').map(Number);
+  if(isNaN(h) || isNaN(m)) return null;
+  return h * 60 + m;
+}
+function calcDurationMinutes(start, end){
+  const s = parseMinutes(start);
+  const e = parseMinutes(end);
+  if(s === null || e === null) return null;
+  let diff = e - s;
+  if(diff < 0) diff += 1440; // cross midnight
+  return diff;
+}
+function formatDuration(mins){
+  if(mins === null || mins < 0) return '—';
+  if(mins >= 60){
+    const h = Math.floor(mins/60);
+    const m = mins % 60;
+    return m ? `${h}س ${m} د` : `${h}س`;
+  }
+  return `${mins} د`;
+}
+function formatDurationShort(mins){
+  return mins === null ? '—' : `${mins} د`;
+}
+
+/* ---------- State ---------- */
+let deliveries = [];
+let expenses = [];
+let dId = 1, eId = 1;
+
+/* ---------- Deliveries UI ---------- */
+const deliveryList = $('#deliveryList');
+const emptyDeliveries = $('#emptyDeliveries');
+
+function deliveryRowTemplate(d){
+  const dur = calcDurationMinutes(d.startTime, d.endTime);
+  const durText = dur === null ? '—' : `${dur} د`;
+  const startHtml = d.startTime
+    ? `<div class="time-input-wrap"><input class="input" type="time" data-field="startTime" value="${escapeHtml(d.startTime)}"><div class="time-ok">✓ بدء / Started</div></div>`
+    : `<button class="btn-time start" type="button" data-set-start="${d.id}">بدء / Start</button>`;
+
+  const endDisabled = !d.startTime;
+  const endHtml = d.endTime
+    ? `<div class="time-input-wrap"><input class="input" type="time" data-field="endTime" value="${escapeHtml(d.endTime)}"><div class="time-ok end-ok">✓ انتهاء / Ended</div></div>`
+    : `<button class="btn-time end" type="button" data-set-end="${d.id}" ${endDisabled ? 'disabled' : ''}>انتهاء / End</button>`;
+
+  return `<div class="delivery-row" data-id="${d.id}">
+    <div class="dcell"><input class="input" type="text" data-field="orderNo" placeholder="1024" value="${escapeHtml(d.orderNo||'')}" autocomplete="off"></div>
+    <div class="dcell"><input class="input" type="tel" inputmode="tel" data-field="customerMobile" placeholder="01xxxxxxxxx" value="${escapeHtml(d.customerMobile||'')}" dir="ltr"></div>
+    <div class="dcell"><input class="input" type="text" data-field="area" placeholder="سموحة" value="${escapeHtml(d.area||'')}"></div>
+    <div class="dcell">${startHtml}</div>
+    <div class="dcell">${endHtml}</div>
+    <div class="dcell"><div class="duration-cell ${dur===null?'empty':''}">${durText}</div></div>
+    <div class="dcell"><input class="input" type="number" inputmode="decimal" step="0.01" min="0" data-field="orderTotal" placeholder="0" value="${escapeHtml(d.orderTotal||'')}"></div>
+    <div class="dcell"><input class="input" type="number" inputmode="decimal" step="0.01" min="0" data-field="cash" placeholder="0" value="${escapeHtml(d.cash||'')}"></div>
+    <div class="dcell"><input class="input" type="number" inputmode="decimal" step="0.01" min="0" data-field="fee" placeholder="0" value="${escapeHtml(d.fee||'')}"></div>
+    <div class="dcell"><select data-field="pay">${paymentOptions(d.pay)}</select></div>
+    <div class="dcell"><input class="input" type="text" data-field="notes" placeholder="—" value="${escapeHtml(d.notes||'')}"></div>
+    <div class="dcell" style="display:flex;justify-content:center"><button class="icon-btn" type="button" data-remove-delivery="${d.id}" title="حذف / Delete">✕</button></div>
+  </div>`;
+}
+
+function paymentOptions(selected){
+  const opts = [
+    ['cash','Cash / كاش'],
+    ['card','Card / فيزا'],
+    ['fawry','Fawry / فوري'],
+    ['inaya','Inaya / عناية'],
+    ['wallet','Wallet / محفظة'],
+  ];
+  return opts.map(([v,l]) => `<option value="${v}" ${selected===v?'selected':''}>${l}</option>`).join('');
+}
+
+function renderDeliveries(){
+  const tableWrap = document.querySelector('.delivery-table-wrap');
+  if(deliveries.length === 0){
+    deliveryList.innerHTML = '';
+    emptyDeliveries.style.display = '';
+    if(tableWrap) tableWrap.style.display = 'none';
+  } else {
+    emptyDeliveries.style.display = 'none';
+    if(tableWrap) tableWrap.style.display = '';
+    deliveryList.innerHTML = deliveries.map(deliveryRowTemplate).join('');
+  }
+  calcTotals();
+}
+
+function addDelivery(data={}){
+  deliveries.push({
+    id: dId++,
+    orderNo:'',
+    customerMobile:'',
+    area:'',
+    startTime:'',
+    endTime:'',
+    orderTotal:'',
+    cash:'',
+    fee:'',
+    pay:'cash',
+    notes:'',
+    ...data
+  });
+  renderDeliveries();
+  setTimeout(()=>{
+    const rows = $$('.delivery-row', deliveryList);
+    const last = rows[rows.length-1];
+    if(last){ const firstInput = $('input', last); if(firstInput) firstInput.focus(); }
+  }, 25);
+}
+
+function removeDelivery(id){
+  deliveries = deliveries.filter(d => d.id !== id);
+  renderDeliveries();
+}
+
+/* ---------- Expenses ---------- */
+const expenseList = $('#expenseList');
+
+function expenseRowTemplate(e){
+  return `<div class="expense-row" data-eid="${e.id}">
+    <div>
+      <div class="exp-label">المبلغ <span class="en">Amount</span></div>
+      <input class="input" type="number" inputmode="decimal" step="0.01" min="0" data-efield="amount" placeholder="0" value="${escapeHtml(e.amount||'')}">
+    </div>
+    <div class="exp-reason">
+      <div class="exp-label">السبب <span class="en">Reason</span></div>
+      <input class="input" type="text" data-efield="reason" placeholder="بنزين / فطار ..." value="${escapeHtml(e.reason||'')}">
+    </div>
+    <div style="display:flex;align-items:end;height:100%">
+      <button class="icon-btn" type="button" data-remove-expense="${e.id}" style="width:44px;justify-content:center" aria-label="Delete">✕</button>
+    </div>
+  </div>`;
+}
+
+function renderExpenses(){
+  expenseList.innerHTML = expenses.map(expenseRowTemplate).join('');
+  calcTotals();
+}
+
+function addExpense(data={}){
+  expenses.push({id:eId++, amount:'', reason:'', ...data});
+  renderExpenses();
+}
+function removeExpense(id){
+  expenses = expenses.filter(e => e.id !== id);
+  renderExpenses();
+}
+
+/* ---------- Totals ---------- */
+function calcTotals(){
+  const rows = deliveries;
+  const count = rows.length;
+  let orderValue = 0, cash = 0, fees = 0, totalMinutes = 0;
+  rows.forEach(r=>{
+    orderValue += toNum(r.orderTotal);
+    cash += toNum(r.cash);
+    fees += toNum(r.fee);
+    const dur = calcDurationMinutes(r.startTime, r.endTime);
+    if(dur !== null) totalMinutes += dur;
+  });
+  const net = cash - fees;
+
+  let expTotal = 0;
+  expenses.forEach(x => { expTotal += toNum(x.amount); });
+  const netAfter = net - expTotal;
+
+  $('#t_orders').textContent = count;
+  $('#t_time').textContent = totalMinutes;
+  $('#t_orderValue').textContent = egp(orderValue);
+  $('#t_cash').textContent = egp(cash);
+  $('#t_fees').textContent = egp(fees);
+  $('#t_net').textContent = egp(net);
+
+  $('#exp_total').textContent = egp(expTotal);
+  $('#exp_net_after').textContent = egp(netAfter);
+
+  // sum bar
+  $('#sumBarCount').textContent = count;
+  $('#sumBarTime').textContent = totalMinutes;
+  $('#sumBarOrders').textContent = egp(orderValue);
+  $('#sumBarCash').textContent = egp(cash);
+  $('#sumBarFees').textContent = egp(fees);
+
+  // mobile sticky
+  $('#ms_orders').textContent = count;
+  $('#ms_cash').textContent = egp(cash) + ' ج.م';
+  $('#ms_net').textContent = egp(netAfter) + ' ج.م';
+
+  const netBox = $('#netBox');
+  if(net >= 0){ netBox.classList.add('cash-positive'); } else { netBox.classList.remove('cash-positive'); }
+
+  return {count, totalMinutes, orderValue, cash, fees, net, expTotal, netAfter};
+}
+
+/* ---------- Events (delegated) ---------- */
+deliveryList.addEventListener('input', (e)=>{
+  const row = e.target.closest('.delivery-row');
+  if(!row) return;
+  const id = Number(row.dataset.id);
+  const field = e.target.getAttribute('data-field');
+  if(!field) return;
+  const obj = deliveries.find(d=>d.id===id);
+  if(obj){
+    obj[field] = e.target.value;
+    // if time changed, re-render just durations live
+    if(field === 'startTime' || field === 'endTime'){
+      calcTotals();
+      // update duration cell inline to avoid full re-render losing focus
+      const dur = calcDurationMinutes(obj.startTime, obj.endTime);
+      const durCell = row.querySelector('.duration-cell');
+      if(durCell){
+        durCell.textContent = dur === null ? '—' : `${dur} د`;
+        durCell.classList.toggle('empty', dur === null);
+      }
+    } else {
+      calcTotals();
+    }
+  }
+});
+deliveryList.addEventListener('change', (e)=>{
+  const row = e.target.closest('.delivery-row');
+  if(!row) return;
+  const id = Number(row.dataset.id);
+  const field = e.target.getAttribute('data-field');
+  if(!field) return;
+  const obj = deliveries.find(d=>d.id===id);
+  if(obj){ obj[field] = e.target.value; calcTotals(); }
+});
+deliveryList.addEventListener('click', (e)=>{
+  const startBtn = e.target.closest('[data-set-start]');
+  if(startBtn){
+    const id = Number(startBtn.getAttribute('data-set-start'));
+    const obj = deliveries.find(d=>d.id===id);
+    if(obj){ obj.startTime = nowHHMM(); renderDeliveries(); }
+    return;
+  }
+  const endBtn = e.target.closest('[data-set-end]');
+  if(endBtn){
+    const id = Number(endBtn.getAttribute('data-set-end'));
+    const obj = deliveries.find(d=>d.id===id);
+    if(obj){ obj.endTime = nowHHMM(); renderDeliveries(); }
+    return;
+  }
+  const delBtn = e.target.closest('[data-remove-delivery]');
+  if(delBtn){
+    removeDelivery(Number(delBtn.getAttribute('data-remove-delivery')));
+  }
+});
+
+expenseList.addEventListener('input', (e)=>{
+  const row = e.target.closest('.expense-row');
+  if(!row) return;
+  const id = Number(row.dataset.eid);
+  const field = e.target.getAttribute('data-efield');
+  const obj = expenses.find(x=>x.id===id);
+  if(obj && field){ obj[field] = e.target.value; calcTotals(); }
+});
+expenseList.addEventListener('click', (e)=>{
+  const btn = e.target.closest('[data-remove-expense]');
+  if(btn){ removeExpense(Number(btn.getAttribute('data-remove-expense'))); }
+});
+
+$('#addDeliveryBtn').addEventListener('click', ()=> addDelivery());
+$('#addExpenseBtn').addEventListener('click', ()=> addExpense());
+
+/* ---------- Top form defaults ---------- */
+$('#reportDate').valueAsDate = new Date();
+
+/* ---------- Mode & PIN ---------- */
+async function initAuth() {
+  currentUser = await PharmaAPI.checkAuth()
+  if (!currentUser) return
+  await PharmaAPI.syncSettingsToLocal()
+  managerPin = localStorage.getItem('pharma_pin') || ''
+  managerWa = localStorage.getItem('pharma_wa') || ''
+  if (currentUser) {
+    const drNameInput = document.getElementById('drName')
+    if (drNameInput && !drNameInput.value) drNameInput.value = currentUser.fullName
+  }
+  addLogoutButtonDelivery()
+}
+
+function addLogoutButtonDelivery() {
+  const brandTitle = document.querySelector('.brand-title')
+  if (brandTitle) {
+    const logoutLink = document.createElement('div')
+    logoutLink.style.cssText = 'font-size:11px;margin-top:4px'
+    logoutLink.innerHTML = '<a href="#" onclick="PharmaAPI.logout();return false" style="color:#fff;opacity:0.7;text-decoration:underline">تسجيل خروج</a>'
+    brandTitle.parentNode.insertBefore(logoutLink, brandTitle.nextSibling)
+  }
+}
+
+function buildPinGrid() {
+  const g = document.getElementById('pinGrid')
+  if (!g) return
+  const keys = ['1','2','3','4','5','6','7','8','9','','0','⌫']
+  g.innerHTML = keys.map(k => {
+    if (k === '') return '<div></div>'
+    if (k === '⌫') return '<button class="pin-key clear" onclick="pinBackspace()">⌫</button>'
+    return '<button class="pin-key" onclick="pinKey(\''+k+'\')">'+k+'</button>'
+  }).join('')
+}
+function pinKey(k) { const inp = document.getElementById('pinInput'); if (inp && inp.value.length < 6) inp.value += k }
+function pinBackspace() { const inp = document.getElementById('pinInput'); if (inp) inp.value = inp.value.slice(0, -1) }
+function cancelPin() { const el = document.getElementById('pinOverlay'); if (el) el.classList.add('hidden') }
+function submitPin() {
+  const entered = document.getElementById('pinInput')?.value
+  if (entered === managerPin) {
+    cancelPin()
+    document.getElementById('doctorSection')?.classList.remove('active')
+    document.getElementById('managerSection')?.classList.add('active')
+  } else { alert('❌ PIN خطأ!'); const inp = document.getElementById('pinInput'); if (inp) inp.value = '' }
+}
+function switchToDoctor() {
+  document.getElementById('managerSection')?.classList.remove('active')
+  document.getElementById('doctorSection')?.classList.add('active')
+}
+// Show manager settings from hub
+function loadManagerUi() {
+  const mgrWa = document.getElementById('mgrWa')
+  const mgrPin = document.getElementById('mgrPin')
+  if (mgrWa) mgrWa.value = managerWa
+  if (mgrPin) mgrPin.value = managerPin
+}
+async function saveMgrSettings() {
+  const wa = document.getElementById('mgrWa')?.value.trim().replace(/^0+/, '')
+  const pin = document.getElementById('mgrPin')?.value.trim()
+  if (!wa || !pin || pin.length < 4) { alert('❌ أدخل بيانات صحيحة'); return }
+  try {
+    await PharmaAPI.setSettings({ pharma_wa: wa, pharma_pin: pin })
+    localStorage.setItem('pharma_wa', wa); localStorage.setItem('pharma_pin', pin)
+    managerWa = wa; managerPin = pin
+    const waInput = document.getElementById('pharmacyWa')
+    if (waInput) waInput.value = wa
+    alert('✅ تم حفظ الإعدادات على الخادم')
+  } catch (e) { alert('❌ فشل الحفظ: ' + e.message) }
+}
+// Check query param
+if (new URLSearchParams(window.location.search).get('mode') === 'manager') {
+  if (managerPin) {
+    const po = document.getElementById('pinOverlay')
+    if (po) po.classList.remove('hidden')
+  }
+}
+
+/* ---------- WhatsApp ---------- */
+const waInput = $('#pharmacyWa');
+if (managerWa) waInput.value = managerWa;
+waInput.addEventListener('input', ()=>{
+  const v = waInput.value.trim().replace(/^0+/, '')
+  if (v) { try{ localStorage.setItem('pharma_wa', v); managerWa = v; }catch(e){} }
+});
+
+$('#whatsappBtn').addEventListener('click', ()=>{
+  const totals = calcTotals();
+  const dr = $('#drName')?.value.trim() || '—';
+  const driverName = $('#driverName').value.trim() || '—';
+  const driverMobile = $('#driverMobile').value.trim() || '—';
+  const dateVal = $('#reportDate').value || '';
+  const dateAr = dateVal ? new Date(dateVal + 'T12:00:00').toLocaleDateString('ar-EG') : '—';
+  const notes = $('#extraNotes').value.trim() || 'لا يوجد';
+
+  const timeTxt = totals.totalMinutes >= 60
+    ? `${Math.floor(totals.totalMinutes/60)} س ${totals.totalMinutes%60} د`
+    : `${totals.totalMinutes} دقيقة`;
+
+  const msg = [
+    'تقفيل دليفري - صيدليات شريف شعبان',
+    '——————————————',
+    `الدكتور: ${dr}`,
+    `المندوب: ${driverName}`,
+    `موبايل: ${driverMobile}`,
+    `التاريخ: ${dateAr}`,
+    '',
+    `عدد الطلبات: ${totals.count}`,
+    `إجمالي وقت التوصيل: ${timeTxt}`,
+    `إجمالي الطلبات: ${egp(totals.orderValue)} ج.م`,
+    `الكاش المحصل: ${egp(totals.cash)} ج.م`,
+    `رسوم التوصيل: ${egp(totals.fees)} ج.م`,
+    `مصروفات: ${egp(totals.expTotal)} ج.م`,
+    `صافي التسليم للصيدلية: ${egp(totals.netAfter)} ج.م`,
+    '',
+    `ملاحظات: ${notes}`
+  ].join('\n');
+
+  const cleanNumber = (waInput.value || managerWa).replace(/[^\d]/g,'');
+  if (!cleanNumber) { alert('❌ لم يتم تعيين رقم واتساب المدير. اذهب للانشر (pharmacy_hub.html) أو لوحة المدير لتعيينه.'); return }
+  const url = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+});
+
+/* ---------- Print / Reset ---------- */
+$('#printBtn').addEventListener('click', ()=> window.print());
+$('#resetBtn').addEventListener('click', ()=>{
+  if(!confirm('هل تريد مسح كل البيانات الحالية؟\nClear all current entries?')) return;
+  deliveries = [];
+  expenses = [];
+  dId = 1; eId = 1;
+  $('#drName').value = '';
+  $('#driverName').value = '';
+  $('#driverMobile').value = '';
+  $('#shiftStart').value = '';
+  $('#shiftEnd').value = '';
+  $('#extraNotes').value = '';
+  $('#signerName').value = '';
+  $('#handoverTime').value = '';
+  $('#reportDate').valueAsDate = new Date();
+  addDelivery();
+  renderExpenses();
+  calcTotals();
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+/* ---------- Helpers ---------- */
+function escapeHtml(s){
+  return String(s ?? '')
+    .replace(/&/g,'&amp;')
+    .replace(/"/g,'&quot;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;');
+}
+
+/* ---------- Init ---------- */
+(async function() {
+  await initAuth()
+  if (!currentUser) return
+  loadManagerUi();
+  buildPinGrid();
+  addDelivery();
+  renderExpenses();
+  calcTotals();
+})();
+
+</script>
+</body>
+</html>
